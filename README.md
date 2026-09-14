@@ -56,3 +56,6 @@ npm run build
 .github/workflows/deploy.yml がmain pushでlockfile準備、npm ci、モデル生成、ブラウザテスト、生成物コミット、本番ビルド、Pagesデプロイを行います。
 base=/matsuyamacastle-/ を設定し、GLBとmanifestは import.meta.env.BASE_URL から参照します。
 Pagesの初期有効化がGitHubの権限で拒否される場合はSettings → Pages → GitHub Actionsの有効化が必要です。CIの成功や公開を未確認のまま完成とは表示しません。
+
+## 最終ゲート
+[全項目の確認状況](docs/RELEASE_GATE.md)。直近のコード検証は成功、Pages初期有効化はGitHubのintegration権限で拒否されています。設定後には公開URLの実ロード・操作・出典・404も自動検証します。実機Safariと目標FPSは未検証です。

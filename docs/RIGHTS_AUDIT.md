@@ -20,3 +20,6 @@ Ken ratios are sourced facts; a metric ken conversion, elevations, opening coord
 
 ## Gates
 Build, generated GLB, browser collision/stair/touch checks, deployed URL, dependency notices, and physical iOS performance remain to be verified. Never infer completion from compilation alone.
+
+## Observed asset verification
+The committed GLB is self-contained and contains no image assets. Installed dependency inventory and upstream notices have been generated and reviewed. Model regeneration is byte-identical under the committed lockfile. Full observed release state is in docs/RELEASE_GATE.md; Pages and physical-device verification remain unresolved.

@@ -30,3 +30,5 @@ Screenshots were generated and reviewed. A follow-up corrects initial pointer-lo
 GitHub Pages initial enablement FAILED: "Resource not accessible by integration" from actions/configure-pages. This is an API integration permission boundary, not a model/build failure.
 Required repository-owner setting: Settings → Pages → Build and deployment → Source → GitHub Actions. Then rerun the failed deploy job or trigger the workflow. No token scopes or access controls have been modified to work around this restriction.
 Physical iPhone/iPad Safari and target FPS remain unverified. RELEASE PASS remains forbidden.
+
+Latest corrected application run: https://github.com/ryotamatsuki/matsuyamacastle-/actions/runs/34873003333 — build and all browser tests PASS; deploy blocked by the same Pages integration permission error. See RELEASE_GATE.md for every original gate. A production-URL smoke check is now included after successful deployment.

@@ -70,9 +70,25 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - uses: actions/configure-pages@v5
         with:
           enablement: true
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Verify published Pages URL and assets
+        run: node scripts/verify-deployment.mjs
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+      - name: Preserve published-page evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-evidence
+          path: deployment-evidence/
