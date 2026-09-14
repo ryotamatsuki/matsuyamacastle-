@@ -10,6 +10,18 @@ globalThis.FileReader=class{
 };
 
 const model=buildCastle();
+const meshEvidence=[
+ {match:/^ExposedBeams_/,accuracy:'B-morphology / geometry-C',evidenceId:'exposed-timber-morphology',sourceIds:['CITY-KEEP','WM-PD-INSIDE','WM-CCBY-ARMOUR-4']},
+ {match:/^(NurigomeLattice|RaisedShutters|SlidingEarthenDoors)_/,accuracy:'B-morphology / placement-C',evidenceId:'window-assembly-morphology',sourceIds:['CITY-KEEP','DPLA-CCBY-WINDOW-1963','WM-PD-TOP']},
+ {match:/^Exterior3_/,accuracy:'B-relationship / geometry-C',evidenceId:'top-floor-openings',sourceIds:['CITY-KEEP','WM-PD-TOP','WM-CCBY-COURTYARD-1']},
+ {match:/^(VisitorStairs|StairHandrails|StairwellGuards)/,accuracy:'C-gameplay-interpolation',evidenceId:'stairs-unregistered',sourceIds:['CITY-KEEP']},
+ {match:/^Columns_/,accuracy:'C-unregistered-coordinates',evidenceId:'column-grid',sourceIds:['CITY-KEEP','WM-PD-INSIDE']}
+];
+model.traverse(o=>{
+ if(!o.isMesh)return;
+ const tag=meshEvidence.find(e=>e.match.test(o.name));
+ if(tag)o.userData={...o.userData,accuracy:tag.accuracy,evidenceId:tag.evidenceId,sourceIds:tag.sourceIds};
+});
 // Keep provenance deterministic: do not embed generation timestamps because the GLB is byte-reproducible.
 model.userData={
  ...model.userData,
