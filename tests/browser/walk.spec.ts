@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test';
-test('load GLB, licence, continuous stairs, walls and inputs',async({page},info)=>{
+test('load GLB, evidence, licence, continuous stairs, walls and inputs',async({page},info)=>{
  const errors:string[]=[];const bad:string[]=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
@@ -8,7 +8,17 @@ test('load GLB, licence, continuous stairs, walls and inputs',async({page},info)
  await expect(page.locator('#start')).toBeEnabled();
  await page.screenshot({path:'test-results/'+info.project.name+'-exterior.png'});
  await page.getByRole('button',{name:'出典・ライセンス',exact:true}).click();
- await expect(page.locator('#panel')).toBeVisible();await expect(page.locator('#panel')).toContainText('CITY-KEEP');
+ await expect(page.locator('#panel')).toBeVisible();
+ await expect(page.locator('#panel')).toContainText('CITY-KEEP');
+ await expect(page.locator('#panel')).toContainText('WM-PD-INSIDE');
+ await expect(page.locator('#panel')).toContainText('WM-CCBY-COURTYARD-1');
+ await expect(page.locator('#panel')).toContainText('CC BY 4.0');
+ await expect(page.locator('#panel')).toContainText('モデル全体の正確なジオメトリはC');
+ await page.locator('#close-panel').click();
+ await page.getByRole('button',{name:'復元について',exact:true}).click();
+ await expect(page.locator('#panel')).toContainText('B');
+ await expect(page.locator('#panel')).toContainText('階段位置・方向');
+ await expect(page.locator('#panel')).toContainText('Cのまま');
  await page.locator('#close-panel').click();
  await page.locator('#start').click();
  await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.active)).toBe(true);
@@ -41,5 +51,8 @@ test('load GLB, licence, continuous stairs, walls and inputs',async({page},info)
  expect(errors).toEqual([]);expect(bad).toEqual([]);
  const model=await page.request.get('models/matsuyama_keep.glb');expect(model.status()).toBe(200);
  const data=await model.body();expect(data.subarray(0,4).toString()).toBe('glTF');
+ const manifest=await page.request.get('data/source_manifest.json');expect(manifest.status()).toBe(200);
+ const sources=await manifest.json();expect(sources.some((s:any)=>s.id==='WM-PD-TOP'&&s.status==='admitted')).toBe(true);
+ expect(sources.some((s:any)=>/BY-SA/.test(s.license)&&s.status!=='excluded')).toBe(false);
  const n=await page.request.get('data/dependency-notices.txt');expect(n.status()).toBe(200);
 });
