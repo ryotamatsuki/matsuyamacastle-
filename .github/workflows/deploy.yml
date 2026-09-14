@@ -1,0 +1,67 @@
+name: Build, validate and deploy castle
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: castle-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Bootstrap exact dependency lock on first run
+        run: |
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only --ignore-scripts
+          fi
+      - run: npm ci
+      - run: npm test
+      - name: Build browser validation edition
+        run: npm run build
+        env:
+          VITE_TEST: '1'
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run test:browser
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-evidence
+          path: test-results/
+      - name: Build production without test mutation interface
+        run: npm run build
+      - name: Persist reproducible model, lockfile and notices
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json public/models public/data/dependency-notices.txt public/data/dependency-inventory.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Persist generated GLB, exact dependency lock and notices"
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

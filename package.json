@@ -1,0 +1,23 @@
+{
+  "name": "matsuyama-castle-walk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && node scripts/build-castle-model.mjs && node scripts/collect-notices.mjs && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test tests/navigation.test.mjs",
+    "test:browser": "playwright test",
+    "model": "node scripts/build-castle-model.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.180.0",
+    "@playwright/test": "1.55.0",
+    "typescript": "5.9.2",
+    "vite": "7.1.5"
+  }
+}
