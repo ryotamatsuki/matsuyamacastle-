@@ -2,13 +2,15 @@ name: Build, validate and deploy castle
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: write
   pages: write
   id-token: write
 concurrency:
-  group: castle-pages
+  group: castle-pages-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   build:
@@ -52,6 +54,7 @@ jobs:
           python3 scripts/inspect_model.py
           cp public/data/model-report.json dist/data/model-report.json
       - name: Persist reproducible model, lockfile and notices
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -60,10 +63,13 @@ jobs:
             git commit -m "Persist generated GLB, exact dependency lock and notices"
             git push origin HEAD:main
           fi
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
