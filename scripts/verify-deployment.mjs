@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import {chromium} from '@playwright/test';
 const url=process.env.SITE_URL;
 if(!url||!url.startsWith('https://ryotamatsuki.github.io/matsuyamacastle-/'))throw Error('Unexpected deployment URL');
@@ -21,10 +22,15 @@ try{
  await page.keyboard.up('KeyW');
  if(await page.evaluate(()=>typeof window.__walkTest!=='undefined'))throw Error('Production exposes test mutation API');
  for(const asset of ['models/matsuyama_keep.glb','data/source_manifest.json','data/dependency-notices.txt','data/model-report.json']){
- const r=await page.request.get(new URL(asset,url).href);
- if(r.status()!==200)throw Error('Asset status '+r.status()+': '+asset);
+  const r=await page.request.get(new URL(asset,url).href);
+  if(r.status()!==200)throw Error('Asset status '+r.status()+': '+asset);
  }
- await page.screenshot({path:'deployment-evidence/published.png'});
+ // Functional/public-site failures must fail before evidence capture; screenshot timeouts must not mask them.
  if(errors.length||bad.length)throw Error(JSON.stringify({errors,bad}));
+ await fs.mkdir('deployment-evidence',{recursive:true});
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.addStyleTag({content:'*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}'});
+ await page.waitForTimeout(250);
+ await page.screenshot({path:'deployment-evidence/published.png',animations:'disabled',timeout:60000});
  console.log('PUBLIC DEPLOYMENT SMOKE PASS:',url);
 }finally{await browser.close();}
