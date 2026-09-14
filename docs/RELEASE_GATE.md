@@ -2,71 +2,80 @@
 
 Updated: 2026-09-15.
 
-Public Pages has been enabled and a Pages deployment has succeeded. The previous `Resource not accessible by integration` blocker is resolved. Baseline deployment run `34873484367` reported Pages deployment success, but its post-deploy evidence screenshot timed out; this branch fixes that evidence-capture path and must pass CI before it is merged.
+The rights-clean interior-evidence upgrade is merged to `main`, deployed to GitHub Pages, and its automated production verification is green. The repository owner enabled GitHub Actions as the Pages source, resolving the former `Resource not accessible by integration` blocker. The previous screenshot-timeout defect has also been repaired and verified in production.
 
-The new interior-evidence work is intentionally conservative: exact geometry remains C overall. Only corroborated morphology/relationships are B.
+The final declaration remains **NOT PASSED** because the requested release standard is stricter than automated deployment success: physical iPhone/iPad Safari remains unverified, and exact interior geometry is still C where rights-cleared multi-view camera registration is insufficient.
+
+## Observed gate ledger
 
 | Gate | Current observed result |
 |---|---|
-| GitHub Pages public | PASS for baseline deployment: `https://ryotamatsuki.github.io/matsuyamacastle-/` |
-| Pages configure/deploy permission | PASS after owner enabled GitHub Actions source |
-| Production post-deploy smoke | BASELINE PARTIAL: model/site checks reached evidence capture; screenshot timed out. Fix present on this branch; CI validation required |
-| Honmaru → keep | PASS in previous browser/navigation gates; must remain green on branch CI |
-| Enter interior | PASS in previous gates |
-| Basement, 1F, 2F, 3F | PASS in previous continuous traversal gate; no floor teleport |
-| Functional walkable stairs | PASS as gameplay route; **historical/exact stair placement remains C** |
-| PC controls | PASS in previous Chromium/WebKit gates |
-| iPhone/iPad touch automation | PASS/PARTIAL: mobile WebKit and simultaneous synthetic touch streams; not physical device evidence |
+| GitHub Pages public | **PASS** — `https://ryotamatsuki.github.io/matsuyamacastle-/` |
+| Pages configure/deploy permission | **PASS** |
+| PR validation | **PASS** — PR #1, Actions run `34877470990` |
+| Post-merge main build | **PASS** — Actions run `34877778166` |
+| Production Pages deploy | **PASS** — Actions run `34877778166` |
+| Production URL smoke | **PASS** — public readiness, attribution, movement, production test-API exclusion, required assets, HTTP/console audit and screenshot evidence all passed |
+| Honmaru → keep | **PASS** in automated continuous route |
+| Enter interior | **PASS** |
+| Basement, 1F, 2F, 3F | **PASS** — continuous traversal, no floor teleport |
+| Functional walkable stairs | **PASS as gameplay route**; historical/exact stair placement remains C |
+| PC controls | **PASS** in Chromium/WebKit automation |
+| iPhone/iPad touch automation | **PASS/PARTIAL** — mobile WebKit + simultaneous synthetic touch streams |
 | Physical iPhone/iPad Safari | **NOT VERIFIED** |
-| Collision | PASS for covered wall, gate, stair and fall-prevention cases; not exhaustive survey validation |
-| `public/models/matsuyama_keep.glb` | PRESENT; branch generator adds evidence/provenance extras |
-| Reproducible model | Previous PASS; branch must retain byte-identical regeneration |
-| `RIGHTS_AUDIT.md` | PRESENT and updated with file-level PD/CC BY evidence |
-| `ACCURACY.md` | PRESENT; overall exact geometry C; limited B morphology/relationship only |
-| `INTERIOR_EVIDENCE_MATRIX.md` | PRESENT |
-| `docs/evidence/*.svg` | PRESENT; explicitly audit diagrams, not floor plans |
-| `ATTRIBUTION.md` | PRESENT; CC BY evidence authors/licences/use recorded |
-| `THIRD_PARTY_NOTICES.md` | PRESENT |
-| `source_manifest.json` | PRESENT; per-file rights/status/use metadata |
-| Used evidence licences | PASS at admission stage: facts-only official sources, PD, CC BY, original output |
-| CC BY-SA / ShareAlike | EXCLUDED from reconstruction input under current policy |
-| Unknown-rights assets | NONE admitted |
-| Third-party photo textures | NONE; photos used only as architectural evidence |
-| Modern exhibits / people | EXCLUDED from reconstruction geometry |
-| Non-open plan tracing | NONE |
-| B evidence multiplicity | Enforced by `tests/evidence.test.mjs`: B requires >=2 independent reusable views/sources |
-| Stair exact geometry | C; not promoted without sufficient evidence |
-| Column centres / partitions / exact window bays | C; camera registration not sufficient |
-| npm ci / npm test / build / browser tests | PR CI required for this branch |
-| Console fatal errors / asset 404 | PR preview + post-merge production smoke required |
-| README / UI evidence viewer | Updated on branch |
-| Survey-grade claim | NONE |
+| Collision | **PASS** for covered wall/gate/stair/fall-prevention cases; not a survey certification |
+| `public/models/matsuyama_keep.glb` | **PASS/PRESENT** with evidence/provenance extras |
+| Reproducible model | **PASS** — byte-identical regeneration |
+| GLB image assets | **PASS** — zero image assets, self-contained |
+| `RIGHTS_AUDIT.md` | **PASS/PRESENT** |
+| `ACCURACY.md` | **PASS/PRESENT** |
+| `INTERIOR_EVIDENCE_MATRIX.md` | **PASS/PRESENT** |
+| `docs/evidence/*.svg` | **PASS/PRESENT** — audit diagrams, explicitly not floor plans |
+| `ATTRIBUTION.md` | **PASS/PRESENT** — CC BY evidence attribution recorded |
+| `THIRD_PARTY_NOTICES.md` | **PASS/PRESENT** |
+| `source_manifest.json` | **PASS/PRESENT** — file-level rights/status/use metadata |
+| Used evidence licences | **PASS** — official facts-only, Public Domain, CC BY and original output only |
+| CC BY-SA / ShareAlike | **EXCLUDED** from reconstruction input under current policy |
+| Unknown-rights assets | **NONE admitted** |
+| Third-party photo textures | **NONE** — photographs are evidence only, not textures |
+| Modern exhibits / people | **EXCLUDED** from reconstruction geometry |
+| Non-open plan tracing | **NONE** |
+| B evidence multiplicity | **PASS** — `tests/evidence.test.mjs` enforces multiple reusable sources/views |
+| Stair exact geometry | **C** — not promoted without sufficient evidence |
+| Column centres / partitions / exact window bays | **C** — camera registration insufficient |
+| npm ci / npm test / production build | **PASS** |
+| Chromium/WebKit/mobile-WebKit browser tests | **PASS** |
+| Console fatal errors / asset 404 in production smoke | **NONE observed** |
+| README / UI evidence viewer | **PASS/PRESENT** |
+| Survey-grade claim | **NONE** |
 
-## B-grade scope
+## B-grade scope actually justified
 
 Current B classifications are deliberately limited to:
 
-- exposed timber / beam morphology;
-- window / plastered lattice / raised shutter / inner sliding-door assembly morphology;
-- top-floor outward-opening / view relationship.
+- exposed timber / beam **morphology**;
+- window / plastered lattice / raised shutter / inner sliding-door assembly **morphology**;
+- top-floor outward-opening / view **relationship**.
 
 These B labels do **not** promote exact coordinates. Exact column centres, beam sections/spacing, floor heights, window counts/bay positions, stair coordinates/directions and internal partitions remain C.
 
-## CI state for this branch
+The generated `public/data/model-report.json` is the machine-readable record of this boundary: overall/geometry accuracy C, limited B scope, zero image assets, rights-cleared source IDs, physical iOS `NOT VERIFIED`, and `release_pass: false`.
 
-PR #1 (`feat/interior-evidence-bgrade`) runs the full build/navigation/evidence/browser/reproducibility/GLB audit without deploying a PR preview. Main-only merge then performs the real Pages deploy and production URL smoke test.
+## CI evidence
 
-The post-deploy smoke test now checks page readiness, attribution, actual movement, production test-API exclusion, required assets, HTTP >=400 responses and console errors **before** evidence screenshot capture. Screenshot capture runs with reduced motion/animations disabled and a dedicated timeout, so screenshot behavior cannot conceal a functional/public-site failure.
+PR #1 (`feat/interior-evidence-bgrade`) passed run `34877470990`, including rights/evidence unit tests, Chromium/WebKit/mobile-WebKit, the continuous 3-floor route, production build, byte-identical GLB regeneration and GLB rights/provenance inspection.
 
-## Remaining hard blockers for the requested final declaration
+After squash merge, main run `34877778166` repeated those checks and additionally passed real GitHub Pages deployment and `Verify published Pages URL and assets`. The repaired screenshot evidence path therefore has production evidence, not merely a local/PR test.
 
-1. Branch CI and post-merge main CI must pass.
-2. Production URL smoke must pass after the new code is deployed.
-3. Physical iPhone/iPad Safari remains `NOT VERIFIED` unless actual device evidence is supplied.
-4. A project-wide “B-grade interior geometry” claim is not justified: important exact geometry is still C because reusable multi-view camera registration is insufficient.
+## Remaining blockers for the requested final declaration
 
-Therefore do **not** issue:
+1. **Physical iPhone/iPad Safari is still `NOT VERIFIED`.** Headless mobile WebKit and synthetic multi-touch are not equivalent to an actual device run.
+2. **A project-wide B-grade interior geometry claim is not justified.** Rights-cleared evidence is sufficient for selected morphology/relationships, but not for exact stairs, column centres, partitions, floor heights or exact window bay coordinates. Multi-view camera registration / photogrammetric recovery is still incomplete.
+
+Therefore the repository must **not** issue:
 
 `MATSUYAMA CASTLE INTERIOR RECONSTRUCTION — B-GRADE VERIFICATION PASS`
 
-until every requested gate is actually satisfied. The current correct final state is **NOT PASSED** even though selected morphology/relationship elements have defensible B evidence.
+Current strict verdict:
+
+**NOT PASSED — automated rights/evidence/build/browser/reproducibility/deployment gates PASS; selected morphology/relationship elements are B; exact interior geometry remains C where evidence is insufficient; physical iOS remains NOT VERIFIED.**
