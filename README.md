@@ -1,46 +1,82 @@
 # 松山城 3D WALK
 MATSUYAMA CASTLE VIRTUAL WALK
 
-**開発版・RELEASE PASS未達。Pagesの初期有効化が権限不足で停止しています。** 松山城大天守の構成を公式資料の事実から独自生成し、本丸・内庭・穴蔵・木造各階を一人称で歩く静的Webアプリです。実物の測量モデルではありません。
+松山城大天守の構成を公的資料の事実と権利確認済みの公開写真資料から検証し、本丸・内庭・穴蔵・木造各階を一人称で歩く静的Webアプリです。**実物の測量モデルではありません。モデル全体の正確なジオメトリはC判定です。**
 
-公開予定先（現時点では未公開）：https://ryotamatsuki.github.io/matsuyamacastle-/
+公開先: https://ryotamatsuki.github.io/matsuyamacastle-/
 
 ## スクリーンショット
-CI成功後に以下へ実描画画像がコミットされます。\n\n![外観](public/screenshots/chromium-exterior.png)\n![天守内部](public/screenshots/chromium-interior.png)\n\nChromiumの実描画。ブラウザの追加証跡はCIのbrowser-evidence artifactにあります。
+
+CIで実描画画像を生成します。
+
+![外観](public/screenshots/chromium-exterior.png)
+![天守内部](public/screenshots/chromium-interior.png)
+
+Chromiumの実描画。追加証跡はGitHub Actionsのbrowser-evidence / deployment-evidence artifactに保存します。
 
 ## 操作
-PC：WASD、マウス、Shift早歩き、Esc解除。階段は歩いて昇降します。
+
+PC：WASD、マウス、Shift早歩き、Esc解除。階段は歩いて昇降します。  
 iPhone/iPad：左スティック＋右ドラッグ。同時操作対応。設定で軽量表示と昼/夕方を切替できます。
-本丸中央の石段から内庭、入口を通って穴蔵へ。穴蔵左→1階右→2階左の階段で3階へ進みます。
+
+本丸中央の石段から内庭、入口を通って穴蔵へ進み、現行の推定階段で3階まで歩けます。**現在の階段位置・方向は史実配置として確認済みではなくC — gameplay interpolationです。**
 
 ## 技術
-Vite / TypeScript / Three.js。静的メッシュを材質・部位ごとにmergeし、遠景はinstancing。PBR、procedural shader grain、soft shadows、DPR制限。画像テクスチャ・外部フォント・CDNアセットなし。
+
+Vite / TypeScript / Three.js。静的メッシュを材質・部位ごとにmergeし、遠景はinstancing。PBR、procedural shader grain、soft shadows、DPR制限。第三者写真の画像テクスチャ、外部フォント、CDNアセットは使用しません。
+
 床・ランプ・壁AABBの共通定義と細分化した移動判定で階段と衝突を処理します。独自の歩行領域による落下防止を備えます。
 
 ## 3Dモデルと再生成
-成果物：public/models/matsuyama_keep.glb（初回CIで生成しコミット）。
-入力：src/data/castleDimensions.mjs。
-構築：src/castle.mjs / scripts/build-castle-model.mjs。
+
+成果物：`public/models/matsuyama_keep.glb`  
+入力：`src/data/castleDimensions.mjs` / `src/data/interiorEvidence.mjs`  
+構築：`src/castle.mjs` / `scripts/build-castle-model.mjs`
+
 ```sh
 npm ci
 npm run model
 npm run build
 npm run dev
 ```
-初回lockfileはCIが生成・コミットします。それまではローカルで npm install --package-lock-only --ignore-scripts を先に実行してください。
-同じlockfile・ソースから、ネットワーク資料を取り直さず再生成できます。
 
-## 復元精度
-1間=1.82mは仮定。明示された間単位の基本軸組・武者走り比率を守り、階高・窓・階段・石割・地形はC判定の推定です。
-[ACCURACY](docs/ACCURACY.md)参照。写真からのB復元は行っていません。天守群の付属棟はC判定の概念外観、現況展示と正確な地形は未実装です。
+同じlockfile・ソースから、外部写真を再ダウンロードせずモデルを再生成できます。GLBには生成時刻を埋め込まず、byte-identical再生成を優先します。source revisionはCIの`public/data/model-report.json`で追跡します。
+
+## 内部復元精度
+
+内部復元では、松山市公式の建築事実に加え、ファイル単位で権利確認したPublic Domain / CC BY写真を**建築構造の証拠**として利用します。写真ピクセルを壁や床へ貼りません。
+
+Accuracyは部位ごとに付与します。
+
+- A-ratio：公式資料に明示された間単位の寸法比率。メートル座標は別判定。
+- B：複数の独立した再利用可能資料から相互確認した形態・関係。
+- C：推定、未登録座標、ゲームプレイ補間、または証拠不足。
+
+現在Bへ昇格した範囲は、露出木部・梁の形態、窓・格子・板戸・内側建具の構成、最上階の外向き開口と眺望関係です。ただし**正確な柱芯、階高、窓bay座標、階段位置・方向、内部間仕切りはCのまま**です。Bはsurvey-gradeを意味しません。
+
+詳細：[`docs/INTERIOR_EVIDENCE_MATRIX.md`](docs/INTERIOR_EVIDENCE_MATRIX.md) / [`docs/ACCURACY.md`](docs/ACCURACY.md)
+
+証拠状態図：
+
+- [`docs/evidence/basement-evidence.svg`](docs/evidence/basement-evidence.svg)
+- [`docs/evidence/floor1-evidence.svg`](docs/evidence/floor1-evidence.svg)
+- [`docs/evidence/floor2-evidence.svg`](docs/evidence/floor2-evidence.svg)
+- [`docs/evidence/floor3-evidence.svg`](docs/evidence/floor3-evidence.svg)
+
+これらは監査図であり、現存天守の平面図ではありません。
 
 ## データ・権利
-[RIGHTS_AUDIT](docs/RIGHTS_AUDIT.md)、[ATTRIBUTION](ATTRIBUTION.md)、[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md)、[source manifest](public/data/source_manifest.json)。
-松山市公式天守解説は事実だけを参照。市の全ページをオープンデータ扱いしません。PLATEAUの該当リソースの条件未確認につき不採用。Wikimedia個別ファイルも未採用です。
-Google、商用書籍、非オープン図面、ブログ・観光写真、権利不明素材、AI画像は使用せず、現代平面図のトレースも行いません。
-コード：MIT（LICENSE）。自作モデル・procedural素材：CC BY 4.0（LICENSE-ASSETS.md）。依存ソフトウェアは元のライセンスを維持し、全文を public/data/dependency-notices.txt に収録します。
+
+[`docs/RIGHTS_AUDIT.md`](docs/RIGHTS_AUDIT.md)、[`ATTRIBUTION.md`](ATTRIBUTION.md)、[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)、[`public/data/source_manifest.json`](public/data/source_manifest.json)を参照。
+
+採用方針：Public Domain / CC0 / CC BY、または行政資料の事実記述。CC BY-SA等のShareAlike素材は今回原則除外します。Google、商用書籍・非オープン図面、ブログ・観光写真、SNS、YouTube、権利不明素材、AI画像、第三者3Dモデルは使用しません。
+
+写真に写る人物・甲冑等の展示・説明板・写真・絵画等はモデル化しません。採用したCC BY資料は作者・Source・Licence・利用方法をATTRIBUTIONとmanifestへ記録します。
+
+コード：MIT（LICENSE）。自作モデル・procedural素材：CC BY 4.0（LICENSE-ASSETS.md）。依存ソフトウェアは元ライセンスを維持し、`public/data/dependency-notices.txt`へ収録します。
 
 ## 検証
+
 ```sh
 npm ci
 npm test
@@ -49,13 +85,20 @@ VITE_TEST=1 npm run build
 npx playwright install chromium webkit
 npm run test:browser
 npm run build
+node scripts/check-reproducibility.mjs
+python3 scripts/inspect_model.py
 ```
-最後のbuildはテスト用位置変更APIを除く本番ビルドです。詳細・未検証項目は [VALIDATION](docs/VALIDATION.md)。
+
+`npm test` は歩行・collisionに加えて、権利状態、ShareAlike素材の非採用、B判定の複数独立資料要件、階段等のC維持を検証します。最後のproduction buildはテスト用位置変更APIを除きます。
 
 ## GitHub Pages
-.github/workflows/deploy.yml がmain pushでlockfile準備、npm ci、モデル生成、ブラウザテスト、生成物コミット、本番ビルド、Pagesデプロイを行います。
-base=/matsuyamacastle-/ を設定し、GLBとmanifestは import.meta.env.BASE_URL から参照します。
-Pagesの初期有効化がGitHubの権限で拒否される場合はSettings → Pages → GitHub Actionsの有効化が必要です。CIの成功や公開を未確認のまま完成とは表示しません。
+
+`.github/workflows/deploy.yml` がmain pushで `npm ci`、navigation/evidence test、モデル生成、Chromium/WebKit browser test、再現性・GLB権利監査、Pages deploy、公開URL smoke testを実行します。
+
+GitHub Pagesは `https://ryotamatsuki.github.io/matsuyamacastle-/` で有効化済みです。以前のPages enablement blockerは解消済みです。公開後検証ではモデル・manifest・notices・reportの200応答、操作、出典、404、fatal console error、本番test API非露出を確認し、その後に証拠スクリーンショットを保存します。
 
 ## 最終ゲート
-[全項目の確認状況](docs/RELEASE_GATE.md)。直近のコード検証は成功、Pages初期有効化はGitHubのintegration権限で拒否されています。設定後には公開URLの実ロード・操作・出典・404も自動検証します。実機Safariと目標FPSは未検証です。
+
+`MATSUYAMA CASTLE INTERIOR RECONSTRUCTION — B-GRADE VERIFICATION PASS` は現時点では**未宣言**です。Bは一部形態・関係に限定され、主要内部座標をBへ昇格できる写真測量登録が未完了であり、実機iPhone/iPad Safariも未検証だからです。
+
+全項目の状況は [`docs/RELEASE_GATE.md`](docs/RELEASE_GATE.md) を参照してください。証拠が不足する部分は今後もCのまま残します。
