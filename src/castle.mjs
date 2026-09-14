@@ -36,9 +36,9 @@ export function buildCastle(){
  function panel(vertices,mat,name){
  const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(vertices,3));g.computeVertexNormals();add(g,mat,name);
  }
- function roof(y,w,d,name){
+ function roof(y,w,d,name,innerW=w-3.2,innerD=d-3.2){
  // Annular hip roof, leaves a real interior void; not a solid pyramid through upper floors.
- const iw=Math.max(w-3.2,3),id=Math.max(d-3.2,3),rise=1.5;
+ const iw=Math.max(innerW,3),id=Math.max(innerD,3),rise=1.5;
  const outer=[[-w/2,y,-d/2],[w/2,y,-d/2],[w/2,y,d/2],[-w/2,y,d/2]];
  const inner=[[-iw/2,y+rise,-id/2],[iw/2,y+rise,-id/2],[iw/2,y+rise,id/2],[-iw/2,y+rise,id/2]];
  for(let k=0;k<4;k++){const j=(k+1)%4;panel([...outer[k],...inner[k],...outer[j],...outer[j],...inner[k],...inner[j]],'roof',name);
@@ -60,7 +60,7 @@ export function buildCastle(){
  // Stone retaining front, interrupted for the walkable approach.
  for(let row=0;row<8;row++)for(let col=0;col<28;col++){const x=(col-13.5)*1.05;if(Math.abs(x)<1.8)continue;box(x,-3.75+row*.5,18,1.02,.47,.8,(row+col)%3?'stone':'stone2','TenshumaruStone');}
  for(const x of [-15,15])for(let row=0;row<8;row++)for(let j=0;j<12;j++)box(x,-3.75+row*.5,6.5+j,.65,.47,.96,(row+j)%3?'stone':'stone2','TenshumaruStone');
- for(let j=0;j<24;j++){const t=(j+1)/24;box(0,-4+4*t-.09,22-4.5*(j+.5)/24,3,.18,4.5/24,'stone2','ApproachStairs');}
+ for(let j=0;j<24;j++){const t=(j+1)/24;box(0,-4+4*t-.09,22-4*(j+.5)/24,3,.18,4/24,'stone2','ApproachStairs');}
  D.floors.forEach((fl,i)=>{
  const y=fl.y,w=fl.width,d=fl.depth,group='Floor'+i;
  for(const p of floorPieces(i))box((p.x0+p.x1)/2,y-.11,(p.z0+p.z1)/2,p.x1-p.x0,.22,p.z1-p.z0,i?'wood':'stone2',group);
@@ -98,7 +98,7 @@ export function buildCastle(){
  }
  if(i<3)for(let k=0;k<7;k++)put(0,y+.08+k*.13,along,.025,.23,'edge','BlackCladding');
  }
- roof(y+3.15,w+2.1,d+2.1,'HongawaraRoof'+i);
+ roof(y+3.15,w+2.1,d+2.1,'HongawaraRoof'+i,i<3?D.floors[i+1].width:w-1.1,i<3?D.floors[i+1].depth:d-1.1);
  gable(0,y+3.2,d/2+1.06,3.2,0,i===1,'SouthGable'+i);
  gable(0,y+3.2,-d/2-1.15,2.8,Math.PI,false,'NorthGable'+i);
  gable(w/2+1.08,y+3.2,0,2.8,Math.PI/2,i===2,'EastGable'+i);

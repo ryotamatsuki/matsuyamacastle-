@@ -16,7 +16,7 @@ export function initWorld(){
  // Honmaru and courtyard: independent interpretive layout, not a survey.
  rect(0,30,48,24,-4,'本丸広場');
  rect(0,12,30,12,0,'天守丸・内庭');
- ramps.push({x:0,width:3,z0:22,z1:17.5,y0:-4,y1:0,name:'天守丸への階段'});
+ ramps.push({x:0,width:3,z0:22,z1:18,y0:-4,y1:0,name:'天守丸への階段'});
  D.floors.forEach((f,i)=>{
  floors.push(...floorPieces(i));
  const h=3.6,w=f.width,d=f.depth,th=.32;
@@ -34,7 +34,7 @@ export function initWorld(){
  // Retaining edges prevent stepping off the high courtyard.
  wall(-15,-.7,12,.3,1.4,12,'内庭端');wall(15,-.7,12,.3,1.4,12,'内庭端');
  for(const x of [-8.35,8.35])wall(x,.5,17.8,13.3,1,.2,'内庭手摺');
- for(const x of [-1.7,1.7])for(let j=0;j<20;j++){let t=(j+.5)/20;wall(x,-4+4*t+.5,22-4.5*t,.16,1,.25,'外階段手摺');}
+ for(const x of [-1.7,1.7])for(let j=0;j<20;j++){let t=(j+.5)/20;wall(x,-4+4*t+.5,22-4*t,.16,1,.25,'外階段手摺');}
 }
 export function groundAt(x,z,maxY){
  let best=-Infinity;
