@@ -1,0 +1,41 @@
+"""Validate actual GLB structure and publish exact Python-computed model metrics."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import struct
+
+path = Path("public/models/matsuyama_keep.glb")
+raw = path.read_bytes()
+magic, version, length = struct.unpack_from("<4sII", raw)
+assert magic == b"glTF" and version == 2 and length == len(raw)
+json_length, json_type = struct.unpack_from("<II", raw, 12)
+assert json_type == 0x4E4F534A
+data = json.loads(raw[20:20 + json_length])
+assert not data.get("images"), "Third-party/image textures are not admitted"
+for buffer in data.get("buffers", []):
+    assert "uri" not in buffer, "GLB must be self-contained"
+names = [node.get("name", "") for node in data["nodes"]]
+for part in ["Anagura", "Floor0", "Floor1", "Floor2", "Floor3", "VisitorStairs0", "VisitorStairs1", "VisitorStairs2", "Columns", "ExposedBeams", "HongawaraRoof", "TenshumaruStone"]:
+    assert any(part in name for name in names), f"Missing required part: {part}"
+triangles = 0
+for mesh in data["meshes"]:
+    for primitive in mesh["primitives"]:
+        assert primitive.get("mode", 4) == 4
+        accessor = primitive.get("indices", primitive["attributes"]["POSITION"])
+        triangles += data["accessors"][accessor]["count"] // 3
+report = {
+    "file": str(path), "source_revision": os.environ.get("GITHUB_SHA", "local"),
+    "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw),
+    "mesh_count": len(data["meshes"]), "triangles": triangles,
+    "image_count": len(data.get("images", [])), "self_contained": True,
+    "licence": "CC-BY-4.0", "overall_accuracy": "C",
+    "physical_iOS_validation": "NOT VERIFIED",
+    "release_pass": False,
+}
+Path("public/data/model-report.json").write_text(json.dumps(report, indent=2) + "\n")
+print(json.dumps(report, indent=2))
+
+# The production bundle must not expose the CI-only position mutation API.
+for script in Path("dist/assets").glob("*.js"):
+    assert "__walkTest" not in script.read_text(), f"Test API leaked into {script}"

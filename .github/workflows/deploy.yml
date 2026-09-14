@@ -47,11 +47,15 @@ jobs:
         run: npm run build
       - name: Verify byte-identical model regeneration
         run: node scripts/check-reproducibility.mjs
+      - name: Inspect actual GLB and rights-clean asset structure
+        run: |
+          python3 scripts/inspect_model.py
+          cp public/data/model-report.json dist/data/model-report.json
       - name: Persist reproducible model, lockfile and notices
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json public/models public/screenshots public/data/dependency-notices.txt public/data/dependency-inventory.json
+          git add package-lock.json public/models public/screenshots public/data/dependency-notices.txt public/data/dependency-inventory.json public/data/model-report.json
           if ! git diff --cached --quiet; then
             git commit -m "Persist generated GLB, exact dependency lock and notices"
             git push origin HEAD:main

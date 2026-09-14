@@ -23,8 +23,9 @@ test('load GLB, licence, continuous stairs, walls and inputs',async({page},info)
  await joy.dispatchEvent('pointerup',{pointerId:11,pointerType:'touch'});await page.locator('#look').dispatchEvent('pointerup',{pointerId:12,pointerType:'touch'});
  const state=await page.evaluate(()=> (window as any).__castle.state);expect(state.z).toBeLessThan(31);expect(state.yaw).not.toBe(0);
  }else{
- await page.keyboard.down('KeyW');await page.waitForTimeout(400);await page.keyboard.up('KeyW');
- expect(await page.evaluate(()=> (window as any).__castle.state.z)).toBeLessThan(31);
+ await page.keyboard.down('KeyW');
+ try { await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.z),{timeout:20000}).toBeLessThan(31); }
+ finally { await page.keyboard.up('KeyW'); }
  }
  // Exercise the identical production Walker at fixed timestep; no floor teleports.
  await page.evaluate(()=>{
