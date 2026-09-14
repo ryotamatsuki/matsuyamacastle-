@@ -9,7 +9,7 @@ permissions:
   id-token: write
 concurrency:
   group: castle-pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,6 +45,8 @@ jobs:
           cp test-results/chromium-interior.png public/screenshots/
       - name: Build production without test mutation interface
         run: npm run build
+      - name: Verify byte-identical model regeneration
+        run: node scripts/check-reproducibility.mjs
       - name: Persist reproducible model, lockfile and notices
         run: |
           git config user.name "github-actions[bot]"

@@ -9,8 +9,9 @@ test('load GLB, licence, continuous stairs, walls and inputs',async({page},info)
  await page.screenshot({path:'test-results/'+info.project.name+'-exterior.png'});
  await page.getByRole('button',{name:'出典・ライセンス',exact:true}).click();
  await expect(page.locator('#panel')).toBeVisible();await expect(page.locator('#panel')).toContainText('CITY-KEEP');
- await page.getByRole('button',{name:'閉じる ×'}).click();
- await page.evaluate(()=> (window as any).__walkTest.start());
+ await page.locator('#close-panel').click();
+ await page.locator('#start').click();
+ await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.active)).toBe(true);
  if(info.project.name.includes('mobile')){
  const joy=page.locator('#joystick'),b=(await joy.boundingBox())!;
  // Two simultaneous touch pointer streams through production handlers.
