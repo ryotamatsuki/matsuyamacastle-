@@ -1,14 +1,30 @@
 {
   "file": "public/models/matsuyama_keep.glb",
-  "source_revision": "6b2bcbb8db8a6d582156be1f45ecadd38f58df89",
-  "sha256": "91e9705008de14f8c2a069417e442af5eba531294b0701434d1fee31c14924d9",
-  "bytes": 3412808,
+  "source_revision": "3e481702f480e69dcca579b689cb9fef66579512",
+  "sha256": "a9aa308aa6b0d098943d6398d1cba9c98050059a0dfdd6a7296a758e55a50464",
+  "bytes": 3414332,
   "mesh_count": 97,
   "triangles": 46404,
   "image_count": 0,
   "self_contained": true,
   "licence": "CC-BY-4.0",
   "overall_accuracy": "C",
+  "geometry_accuracy": "C",
+  "evidence_version": "2026-09-15-b1",
+  "b_grade_scope": [
+    "exposed-timber-morphology",
+    "window-assembly-morphology",
+    "top-floor-openings"
+  ],
+  "b_grade_is_morphology_only": true,
+  "source_ids": [
+    "CITY-KEEP",
+    "WM-PD-INSIDE",
+    "WM-PD-TOP",
+    "WM-CCBY-COURTYARD-1",
+    "WM-CCBY-ARMOUR-4",
+    "DPLA-CCBY-WINDOW-1963"
+  ],
   "physical_iOS_validation": "NOT VERIFIED",
   "release_pass": false
 }
