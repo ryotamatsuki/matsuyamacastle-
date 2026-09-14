@@ -6,7 +6,7 @@ MATSUYAMA CASTLE VIRTUAL WALK
 公開先（デプロイ成功後）：https://ryotamatsuki.github.io/matsuyamacastle-/
 
 ## スクリーンショット
-CIの browser-evidence artifact に外観と内部の実描画スクリーンショットを生成します。未撮影の画像やイメージ図を実画面として掲載しません。公開版の画像掲載は実際のCI証跡確認後に行います。
+CI成功後に以下へ実描画画像がコミットされます。\n\n![外観](public/screenshots/chromium-exterior.png)\n![天守内部](public/screenshots/chromium-interior.png)\n\nChromiumの実描画。ブラウザの追加証跡はCIのbrowser-evidence artifactにあります。
 
 ## 操作
 PC：WASD、マウス、Shift早歩き、Esc解除。階段は歩いて昇降します。
@@ -32,7 +32,7 @@ npm run dev
 
 ## 復元精度
 1間=1.82mは仮定。明示された間単位の基本軸組・武者走り比率を守り、階高・窓・階段・石割・地形はC判定の推定です。
-[ACCURACY](docs/ACCURACY.md)参照。写真からのB復元は行っていません。天守群の付属棟、現況展示、正確な地形は未実装です。
+[ACCURACY](docs/ACCURACY.md)参照。写真からのB復元は行っていません。天守群の付属棟はC判定の概念外観、現況展示と正確な地形は未実装です。
 
 ## データ・権利
 [RIGHTS_AUDIT](docs/RIGHTS_AUDIT.md)、[ATTRIBUTION](ATTRIBUTION.md)、[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md)、[source manifest](public/data/source_manifest.json)。

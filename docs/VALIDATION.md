@@ -18,7 +18,7 @@ Limits:
 - Fixed-step route checks are not a complete visual or human usability review.
 - Desktop 60fps / mobile 30fps cannot be certified by headless CI.
 - Screenshot review remains necessary.
-- Auxiliary linked keep buildings, exact interiors, and real geographic landscape are incomplete.
+- Auxiliary linked keep buildings are conceptual exterior volumes; exact interiors and real geographic landscape are incomplete.
 - Production test mutation API must not be shipped (VITE_TEST is unset on final build).
 
 The final RELEASE PASS is forbidden until physical-device input/performance, visual quality, deployed assets and all user gates are actually confirmed.

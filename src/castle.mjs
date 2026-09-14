@@ -124,6 +124,33 @@ export function buildCastle(){
  for(const z of [-2.7,0,2.7])box(x,s.y1+.45,z,.07,.9,.07,'wood','StairwellGuards');
  }
  });
+ // Interpretive linked keep surroundings: independent original volumes, not an exact surveyed layout.
+ function annex(x,z,w,d,h,label){
+ box(x,.3,z,w+.6,.6,d+.6,'stone',label);
+ box(x,h/2,z,w,h,d,'plaster',label);
+ box(x,.9,z,w+.03,1.2,d+.03,'black',label);
+ for(const side of [-1,1])for(let j=0;j<3;j++){
+ const wx=x+(j-1)*w/3;
+ box(wx,h*.6,z+side*(d/2+.02),w*.15,.9,.03,'edge',label);
+ for(let k=0;k<4;k++)box(wx+(k-1.5)*w*.035,h*.6,z+side*(d/2+.045),.04,.9,.04,'plaster',label);
+ }
+ // Local pitched roof surfaces and tiled ridges.
+ for(const side of [-1,1]){
+ const zz=z+side*(d/2+.7),y=h+.15,peak=h+1.6;
+ panel([x-w/2-.6,y,zz,x+w/2+.6,y,zz,x-w/2-.6,peak,z,x+w/2+.6,y,zz,x+w/2+.6,peak,z,x-w/2-.6,peak,z],'roof',label);
+ for(let t=0;t<=w+1;t+=.3)beam([x-w/2-.5+t,y+.05,zz],[x-w/2-.5+t,peak+.05,z],.045,'tile',label);
+ }
+ beam([x-w/2-.6,h+1.65,z],[x+w/2+.6,h+1.65,z],.12,'roof',label);
+ }
+ annex(-11,10,5,7,7,'AuxiliaryKeep_C');
+ annex(11,10,5,7,5,'CornerTurret_C');
+ annex(-6,15.5,7,3,3,'ConnectingGalleryWest_C');
+ annex(6,15.5,7,3,3,'ConnectingGalleryEast_C');
+ // Gate over the approach, with open passage and raised lintel.
+ box(-2,1.7,15.5,.3,3.4,.35,'wood','CourtyardGate_C');box(2,1.7,15.5,.3,3.4,.35,'wood','CourtyardGate_C');
+ box(0,3.2,15.5,4.5,.4,.5,'wood','CourtyardGate_C');
+ for(const side of [-1,1])panel([-2.5,3.4,15.5+side,2.5,3.4,15.5+side,-2.5,4.4,15.5,2.5,3.4,15.5+side,2.5,4.4,15.5,-2.5,4.4,15.5],'roof','CourtyardGate_C');
+
  // Courtyard boundary rails, same extents as collision geometry.
  for(const b of walls.filter(b=>/内庭手摺|外階段手摺/.test(b.name)))box((b.x0+b.x1)/2,(b.y0+b.y1)/2,(b.z0+b.z1)/2,b.x1-b.x0,b.y1-b.y0,b.z1-b.z0,'wood','ApproachGuards');
  for(const {list,mat,name,confidence} of buckets.values()){
