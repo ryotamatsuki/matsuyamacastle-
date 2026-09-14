@@ -1,10 +1,18 @@
 # Validation gate
 
-Status: **NOT PASSED** for the requested full B-grade declaration. Do not label this repository a surveyed reconstruction.
+Status: **NOT PASSED** for the requested full B-grade declaration. Automated implementation and deployment validation is green, but the project must not be labelled a surveyed reconstruction.
 
-## Automated gates
+## Observed automated result
 
-GitHub Actions now runs validation on pull requests and deploys only from main. The build job covers:
+The rights-clean interior-evidence implementation passed:
+
+- PR #1 Actions run `34877470990` — **PASS**
+- post-merge main Actions run `34877778166` — **PASS**
+- GitHub Pages configure/deploy — **PASS**
+- real production URL smoke test — **PASS**
+- production evidence screenshot capture — **PASS**
+
+The build job covers:
 
 - `npm ci`
 - navigation/collision tests
@@ -20,7 +28,7 @@ GitHub Actions now runs validation on pull requests and deploys only from main. 
 - production test mutation API exclusion
 - screenshots/artifacts
 
-Main-only deploy then runs GitHub Pages deployment followed by a real production URL smoke check.
+Main-only deployment then publishes the Pages artifact and runs a real production URL smoke check.
 
 ## Rights / evidence gates
 
@@ -38,7 +46,7 @@ This prevents a documentation-only or cosmetic promotion from C to B.
 
 ## Browser gates
 
-Browser tests exercise:
+Browser tests verify:
 
 - GLB load;
 - source / rights viewer;
@@ -52,19 +60,21 @@ Browser tests exercise:
 - GLB signature, manifest and licence-notice endpoint;
 - screenshots.
 
+Run `34877470990` passed these gates before merge. Run `34877778166` repeated them on main and passed.
+
 ## Public deployment smoke gate
 
 The production smoke test verifies, in this order:
 
-1. public page loads and `window.__castle.ready` becomes true;
-2. source panel contains attribution;
+1. the public page loads and `window.__castle.ready` becomes true;
+2. the source panel contains attribution;
 3. Start works and keyboard movement changes the actual player position;
 4. production does not expose `__walkTest`;
 5. GLB, source manifest, dependency notices and model report return HTTP 200;
 6. there are no captured console errors or HTTP >=400 responses;
 7. only after those functional gates pass, a published-page evidence screenshot is taken.
 
-A previous run (`34873484367`) successfully configured and deployed Pages after the repository owner enabled GitHub Actions as the Pages source. Its final evidence screenshot hit Playwright's 30-second screenshot timeout. The current branch changes evidence capture to create its directory explicitly, request reduced motion, disable CSS animations/transitions for capture, and use a dedicated screenshot timeout **after** functional/public-site checks. Thus an evidence-capture issue cannot conceal a load/404/console failure.
+The old run `34873484367` had successfully deployed Pages but its final screenshot hit Playwright's 30-second timeout. The implementation now creates the evidence directory explicitly, requests reduced motion, disables CSS animations/transitions only for capture, and uses a dedicated screenshot timeout **after** all functional/public-site checks. Main run `34877778166` passed `Verify published Pages URL and assets` and preserved the published-page evidence, confirming that this defect is resolved in production.
 
 ## Accuracy validation boundary
 
@@ -74,9 +84,20 @@ Current B scope is intentionally limited to:
 - window / plastered lattice / raised-shutter / inner sliding-door assembly morphology;
 - top-floor outward-opening / view relationship.
 
-Exact column centres, beam sections/spacing, floor heights, window counts/bay positions, stair coordinates/directions and internal partitions remain C. The evidence matrix and GLB provenance must continue to agree with this boundary.
+Exact column centres, beam sections/spacing, floor heights, window counts/bay positions, stair coordinates/directions and internal partitions remain C. The evidence matrix, GLB provenance and generated model report agree with this boundary.
 
-## Limits not solvable by headless CI
+`public/data/model-report.json` records:
+
+- overall accuracy: C;
+- geometry accuracy: C;
+- limited B morphology/relationship scope;
+- zero image assets;
+- self-contained GLB;
+- rights-cleared source IDs;
+- physical iOS: `NOT VERIFIED`;
+- `release_pass: false`.
+
+## Limits not solved by automated CI
 
 - WebKit automation is not physical iOS Safari.
 - Synthetic touch streams are not physical multi-touch evidence.
@@ -85,8 +106,14 @@ Exact column centres, beam sections/spacing, floor heights, window counts/bay po
 - Fixed-step route tests are not a complete visual/human heritage review.
 - Auxiliary linked keep buildings and surrounding landscape remain conceptual C-grade geometry.
 
-## Current observed state
+## Final strict interpretation
 
-Baseline source before this PR had passing build/navigation/browser/reproducibility checks. Pages is now public and the old enablement blocker is resolved. PR #1 (`feat/interior-evidence-bgrade`) adds the rights/evidence/provenance gates described above and must obtain its own green Actions result before merge. After merge, main must obtain a green deployment + production smoke result.
+All requested automated rights/build/browser/reproducibility/Pages-production gates that are executable in CI now pass. That does **not** satisfy the user's all-or-nothing final declaration because physical iOS remains unverified and major exact interior geometry remains C by design.
 
-Even if all automated gates pass, physical iPhone/iPad Safari remains `NOT VERIFIED` unless actual device evidence is supplied. Therefore the requested final `MATSUYAMA CASTLE INTERIOR RECONSTRUCTION — B-GRADE VERIFICATION PASS` must not be issued merely from CI success.
+Therefore:
+
+`MATSUYAMA CASTLE INTERIOR RECONSTRUCTION — B-GRADE VERIFICATION PASS`
+
+must **not** be issued yet.
+
+Current verdict: **NOT PASSED**, with defensible B classifications only for the explicitly enumerated morphology/relationship elements.
