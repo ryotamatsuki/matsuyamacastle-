@@ -17,10 +17,11 @@ export function buildCastle(){
  ground:new T.MeshStandardMaterial({color:0xb2a88a,roughness:1}),
  iron:new T.MeshStandardMaterial({color:0x292d2d,metalness:.55,roughness:.7}),
  tatami:new T.MeshStandardMaterial({color:0x89866a,roughness:1})
- };for(const [k,m] of Object.entries(mats))m.name=k;
+ };for(const [k,m] of Object.entries(mats)){m.name=k;if(k==='roof')m.side=T.DoubleSide;}
  const buckets=new Map();
  function add(geo,mat,name='structure',confidence='C'){
  geo=geo.index?geo.toNonIndexed():geo;
+ geo.deleteAttribute('uv'); // No image textures; unify attribute layout across procedural primitives.
  const key=mat+':'+name;
  if(!buckets.has(key))buckets.set(key,{list:[],mat,name,confidence});
  buckets.get(key).list.push(geo);

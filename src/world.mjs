@@ -33,6 +33,7 @@ export function initWorld(){
  for(const s of D.stairs){ramps.push({...s,name:'後補を表現した推定階段'});for(let j=0;j<20;j++){const t=(j+.5)/20,y=s.y0+(s.y1-s.y0)*t;for(const dx of [-1,1])wall(s.x+dx*(s.width/2+.16),y+.55,s.z0+(s.z1-s.z0)*t,.12,1.1,Math.abs(s.z1-s.z0)/20+.01,'階段側面手摺');}}
  // Interpretive auxiliary keep volumes. Solid excluded interiors, matching visible envelopes.
  for(const b of [{x:-11,z:10,w:5,d:7,h:7},{x:11,z:10,w:5,d:7,h:5},{x:-6,z:15.5,w:7,d:3,h:3},{x:6,z:15.5,w:7,d:3,h:3}])wall(b.x,b.h/2,b.z,b.w,b.h,b.d,'付属棟（外観のみ・推定）');
+ for(const x of [-2,2])wall(x,1.7,15.5,.3,3.4,.35,'内庭門柱');
  // Retaining edges prevent stepping off the high courtyard.
  wall(-15,-.7,12,.3,1.4,12,'内庭端');wall(15,-.7,12,.3,1.4,12,'内庭端');
  for(const x of [-8.35,8.35])wall(x,.5,17.8,13.3,1,.2,'内庭手摺');
