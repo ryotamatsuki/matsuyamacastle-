@@ -1,9 +1,9 @@
 # 松山城 3D WALK
 MATSUYAMA CASTLE VIRTUAL WALK
 
-**開発版・RELEASE PASS未達。** 松山城大天守の構成を公式資料の事実から独自生成し、本丸・内庭・穴蔵・木造各階を一人称で歩く静的Webアプリです。実物の測量モデルではありません。
+**開発版・RELEASE PASS未達。Pagesの初期有効化が権限不足で停止しています。** 松山城大天守の構成を公式資料の事実から独自生成し、本丸・内庭・穴蔵・木造各階を一人称で歩く静的Webアプリです。実物の測量モデルではありません。
 
-公開先（デプロイ成功後）：https://ryotamatsuki.github.io/matsuyamacastle-/
+公開予定先（現時点では未公開）：https://ryotamatsuki.github.io/matsuyamacastle-/
 
 ## スクリーンショット
 CI成功後に以下へ実描画画像がコミットされます。\n\n![外観](public/screenshots/chromium-exterior.png)\n![天守内部](public/screenshots/chromium-interior.png)\n\nChromiumの実描画。ブラウザの追加証跡はCIのbrowser-evidence artifactにあります。

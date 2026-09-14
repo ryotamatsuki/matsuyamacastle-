@@ -13,9 +13,9 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,touchDevice?1.35:1.75));rendere
 const hemi=new T.HemisphereLight(0xe1eef5,0x6a6043,2);scene.add(hemi);
 const sun=new T.DirectionalLight(0xffefce,3.2);sun.position.set(-28,45,24);sun.castShadow=true;sun.shadow.mapSize.set(touchDevice?1024:2048,touchDevice?1024:2048);Object.assign(sun.shadow.camera,{left:-25,right:25,top:25,bottom:-25,near:1,far:100});sun.shadow.normalBias=.035;sun.shadow.bias=-.0002;scene.add(sun,sun.target);
 // Gentle non-shadow fill approximates bounce through windows without claiming baked measured light.
-const fill=new T.HemisphereLight(0xc2c8bc,0x342919,.7);scene.add(fill);
+const fill=new T.HemisphereLight(0xc2c8bc,0x342919,.7);scene.add(fill);scene.add(new T.AmbientLight(0xffe4be,.5));
 const player=new Walker();let yaw=0,pitch=0,active=false,loaded=false,frameCount=0,elapsed=0,fps=0;
-let joyX=0,joyY=0;const keys=new Set<string>();let manifest:any[]=[];
+let ignoreMouseMoves=0;let joyX=0,joyY=0;const keys=new Set<string>();let manifest:any[]=[];
 const panel=$<HTMLDialogElement>('#panel');
 const hotspots=[
  {name:'石造穴蔵',floor:0,x:0,z:5.3,text:'木造天守の下に石造の階があります。入口・柱・梁の構成は公式解説を参照し、石材割付と寸法は推定しています。'},
@@ -33,8 +33,8 @@ function start(){if(!loaded)return;active=true;$('#welcome').hidden=true;$('#hud
 $('#start').onclick=start;$('#pause').onclick=pause;
 document.addEventListener('keydown',e=>{if(e.code==='Escape'){if(panel.open)panel.close();pause();}if(active&&!panel.open){keys.add(e.code);if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();}});
 document.addEventListener('keyup',e=>keys.delete(e.code));window.addEventListener('blur',resetInput);document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
-document.addEventListener('pointerlockchange',()=>{if(!document.pointerLockElement&&!touchDevice&&active)pause();});
-document.addEventListener('mousemove',e=>{if(active&&!panel.open&&document.pointerLockElement===canvas){yaw-=e.movementX*.0022;pitch=Math.max(-1.3,Math.min(1.3,pitch-e.movementY*.0022));}});
+document.addEventListener('pointerlockchange',()=>{if(document.pointerLockElement===canvas)ignoreMouseMoves=2;if(!document.pointerLockElement&&!touchDevice&&active)pause();});
+document.addEventListener('mousemove',e=>{if(active&&!panel.open&&document.pointerLockElement===canvas){if(ignoreMouseMoves>0){ignoreMouseMoves--;return;}yaw-=Math.max(-150,Math.min(150,e.movementX))*.0022;pitch=Math.max(-1.3,Math.min(1.3,pitch-Math.max(-150,Math.min(150,e.movementY))*.0022));}});
 canvas.onclick=()=>{if(active&&!touchDevice&&!panel.open)canvas.requestPointerLock()?.catch(()=>{});};
 function pointerArea(id:string,fn:(dx:number,dy:number,first:boolean,e:PointerEvent)=>void,end:()=>void){
  const el=$(id);let pointer:number|null=null,px=0,py=0;
@@ -86,4 +86,4 @@ function frame(now:number){requestAnimationFrame(frame);const dt=Math.min((now-l
 requestAnimationFrame(frame);
 // Read-only diagnostics are available publicly; test mutation API only in CI build.
 (window as any).__castle={get ready(){return loaded},get state(){return {x:player.x,y:player.y,z:player.z,yaw,pitch,active,fps,meshes:renderer.info.render.calls}},get floor(){return floorIndex()}};
-if(import.meta.env.VITE_TEST==='1')(window as any).__walkTest={step:(x:number,z:number,dt:number)=>player.step(x,z,dt),reset:()=>player.reset(),set:(x:number,y:number,z:number)=>{player.x=x;player.y=y;player.z=z;},start:()=>{active=true;$('#welcome').hidden=true;$('#hud').hidden=false;$('#touch').hidden=!touchDevice;},world:{floors,walls,ramps}};
+if(import.meta.env.VITE_TEST==='1')(window as any).__walkTest={look:(y:number,p:number)=>{yaw=y;pitch=p;},step:(x:number,z:number,dt:number)=>player.step(x,z,dt),reset:()=>player.reset(),set:(x:number,y:number,z:number)=>{player.x=x;player.y=y;player.z=z;},start:()=>{active=true;$('#welcome').hidden=true;$('#hud').hidden=false;$('#touch').hidden=!touchDevice;},world:{floors,walls,ramps}};

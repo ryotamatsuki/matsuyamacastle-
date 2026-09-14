@@ -48,10 +48,10 @@ export function buildCastle(){
  beam(outer[k],outer[j],.09,'edge',name);
  }
  }
- function gable(x,y,z,size,rot,curved,name){
+ function gable(x,y,z,size,rot,curved,name,height=size*.42){
  // Original parametric ornamental silhouette; exact curve and locations are C.
  const pts=[];const n=curved?16:2;
- for(let i=0;i<=n;i++){const t=i/n;pts.push(new T.Vector2((t-.5)*size,curved?size*.36*Math.exp(-Math.pow((t-.5)*3.3,2)):size*.42*(1-Math.abs(2*t-1))));}
+ for(let i=0;i<=n;i++){const t=i/n;pts.push(new T.Vector2((t-.5)*size,curved?size*.36*Math.exp(-Math.pow((t-.5)*3.3,2)):height*(1-Math.abs(2*t-1))));}
  const shape=new T.Shape();shape.moveTo(-size/2,0);for(const p of pts)shape.lineTo(p.x,p.y);shape.lineTo(size/2,0);shape.closePath();
  const g=new T.ExtrudeGeometry(shape,{depth:.15,bevelEnabled:false});g.rotateY(rot);g.translate(x,y,z);add(g,'plaster',name);
  for(let i=1;i<pts.length;i++){const a=new T.Vector3(pts[i-1].x,pts[i-1].y,0).applyAxisAngle(new T.Vector3(0,1,0),rot).add(new T.Vector3(x,y,z)),b=new T.Vector3(pts[i].x,pts[i].y,0).applyAxisAngle(new T.Vector3(0,1,0),rot).add(new T.Vector3(x,y,z));beam(a.toArray(),b.toArray(),.11,'roof',name);}
@@ -112,7 +112,7 @@ export function buildCastle(){
  panel([-a/2,ry,-b/2,a/2,ry,-b/2,-a/2,ry+1.7,0,a/2,ry,-b/2,a/2,ry+1.7,0,-a/2,ry+1.7,0],'roof','TopRoof');
  panel([-a/2,ry+1.7,0,a/2,ry+1.7,0,-a/2,ry,b/2,a/2,ry+1.7,0,a/2,ry,b/2,-a/2,ry,b/2],'roof','TopRoof');
  beam([-a/2,ry+1.75,0],[a/2,ry+1.75,0],.16,'tile','Ridge');
- for(const x of [-a/2,a/2])gable(x,ry,0,b,Math.PI/2,false,'IrimoyaGable');
+ for(const x of [-a/2,a/2])gable(x,ry,0,b,Math.PI/2,false,'IrimoyaGable',1.7);
  D.stairs.forEach((s,i)=>{
  const n=20;
  for(let j=0;j<n;j++){const t=(j+1)/n;box(s.x,s.y0+(s.y1-s.y0)*t-.07,s.z0+(s.z1-s.z0)*(j+.5)/n,s.width,.14,Math.abs(s.z1-s.z0)/n+.01,'wood','VisitorStairs'+i);}

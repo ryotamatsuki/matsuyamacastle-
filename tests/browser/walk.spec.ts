@@ -34,7 +34,8 @@ test('load GLB, licence, continuous stairs, walls and inputs',async({page},info)
  for(const [x,z] of route){let arrived=false;for(let i=0;i<2400;i++){const p=(window as any).__castle.state,dx=x-p.x,dz=z-p.z,n=Math.hypot(dx,dz);if(n<.035){arrived=true;break;}api.step(dx/n*2,dz/n*2,1/120);}if(!arrived)throw Error('Blocked route '+x+','+z);}
  });
  expect(await page.evaluate(()=> (window as any).__castle.state.y)).toBeCloseTo(10.8);
- await page.waitForTimeout(200);await page.screenshot({path:'test-results/'+info.project.name+'-interior.png'});
+ await page.evaluate(()=> (window as any).__walkTest.look(0,0));
+ await page.waitForTimeout(500);await page.screenshot({path:'test-results/'+info.project.name+'-interior.png'});
  await page.evaluate(()=>{const a=(window as any).__walkTest;for(let i=0;i<300;i++)a.step(8,0,.02);});
  expect(await page.evaluate(()=> (window as any).__castle.state.x)).toBeLessThan(5.4);
  expect(errors).toEqual([]);expect(bad).toEqual([]);
