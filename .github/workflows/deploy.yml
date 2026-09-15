@@ -69,6 +69,8 @@ jobs:
           git add package-lock.json public/textures public/data/material-manifest.json public/models public/screenshots public/data/dependency-notices.txt public/data/dependency-inventory.json public/data/model-report.json
           if ! git diff --cached --quiet; then
             git commit -m "Persist generated GLB, exact dependency lock and notices"
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
       - name: Upload Pages artifact
