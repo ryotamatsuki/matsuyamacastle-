@@ -1,0 +1,164 @@
+[
+  {
+    "path": "public/textures/timber-color.png",
+    "sha256": "2e6a63d072d683649b95185a275077c17480dd6c17fa908e85f600964d473d17",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/timber-normal.png",
+    "sha256": "248f0523905079d5880d8192b4f414872308f2e2a62f134a87b2babe2008ad2e",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/timber-roughness.png",
+    "sha256": "ffda55f7deaa1286c005cfacac5710900cb01502fca92c36739f213d6a4dc4e1",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/plaster-color.png",
+    "sha256": "b81565c969673f7fcec872fff294be51f6f2bfb78db58226b24a99864257f1e6",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/plaster-normal.png",
+    "sha256": "7888d004375f1150350509016c9bbdd6aa21fc9d84e230d9b3143bb3d1f3c631",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/plaster-roughness.png",
+    "sha256": "28ec3a18c6ddecad887eeca009d7c748b9cb2b145cd0ce622b35fe0d81e1bcdd",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/stone-color.png",
+    "sha256": "37d96d243fca10876e092db55df8599eda886c1bb303f40bcdd605af1221d143",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/stone-normal.png",
+    "sha256": "56f7e3650730e6552188420448442c2e3475d73b7f2323eafb38fa2e1a59826b",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/stone-roughness.png",
+    "sha256": "3463c31006bb7b40f70acb84066d8b6c24d084328c6843cc6fb18c9725073f0b",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/ceramic-color.png",
+    "sha256": "0bcf309e2e789de9010139218918da7018d94424624613d808be7dbf35bf9b68",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/ceramic-normal.png",
+    "sha256": "2cca44dc1e67bb3053137dafe937620900b57eed20aa3d63cb9c675d69875a13",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/ceramic-roughness.png",
+    "sha256": "06f984a1e3cf39aa22c026b5da963172ee273ddd3adeecfc3c5e8fe82e09541e",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/earth-color.png",
+    "sha256": "21cd442facd07188173b91c114e4e774cf53e373eb5fc95ea3cbac50f643a612",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/earth-normal.png",
+    "sha256": "2f9c0bccb0dc78a875b5396b1d073799ab62591abc58200e9574eb29d440f831",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/earth-roughness.png",
+    "sha256": "5ba3541e9a866c1abaf8c08e53bbaf2a7b02e933688e7c850af34f9367e5659f",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/iron-color.png",
+    "sha256": "3d3e3344ead5745d29281f443499de00af315b0bfe5d76ea2f6e550eac52d92a",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/iron-normal.png",
+    "sha256": "c4952e322a7faeff39c0e79ae2816487f64e09e7f11ee16b789c02083cbaa765",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  },
+  {
+    "path": "public/textures/iron-roughness.png",
+    "sha256": "3b66f6c5d84cb5357a2fdf662ab67a3b962ecafcbd026064c695453702b4e0b3",
+    "width": 256,
+    "height": 256,
+    "source": "ORIGINAL",
+    "license": "CC BY 4.0",
+    "method": "deterministic mathematical synthesis; no source image pixels"
+  }
+]

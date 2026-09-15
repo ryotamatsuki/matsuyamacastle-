@@ -40,11 +40,19 @@ jobs:
         with:
           name: browser-evidence
           path: test-results/
+      - name: Preserve reviewable models and site
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: castle-preview
+          path: dist/
       - name: Save actual browser screenshots
         run: |
           mkdir -p public/screenshots
           cp test-results/chromium-exterior.png public/screenshots/
-          cp test-results/chromium-interior.png public/screenshots/
+          cp test-results/chromium-plateau.png public/screenshots/
+          cp test-results/webkit-interior.png public/screenshots/
+          cp test-results/mobile-webkit-interior.png public/screenshots/
       - name: Build production without test mutation interface
         run: npm run build
       - name: Verify byte-identical model regeneration
@@ -58,7 +66,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json public/models public/screenshots public/data/dependency-notices.txt public/data/dependency-inventory.json public/data/model-report.json
+          git add package-lock.json public/textures public/data/material-manifest.json public/models public/screenshots public/data/dependency-notices.txt public/data/dependency-inventory.json public/data/model-report.json
           if ! git diff --cached --quiet; then
             git commit -m "Persist generated GLB, exact dependency lock and notices"
             git push origin HEAD:main

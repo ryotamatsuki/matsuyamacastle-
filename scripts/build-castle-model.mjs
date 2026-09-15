@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import {embedMaterials} from './embed-materials.mjs';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {buildCastle} from '../src/castle.mjs';
 import {evidenceSummary} from '../src/data/interiorEvidence.mjs';
@@ -29,12 +30,13 @@ model.userData={
  overallAccuracy:evidenceSummary.overallAccuracy,
  bGradeScope:evidenceSummary.bGradeScope,
  bGradeMeaning:'corroborated morphology/relationship only; not survey-grade coordinates',
- sourceIds:evidenceSummary.sourceIds,
+ sourceIds:[...evidenceSummary.sourceIds,'CITY-PHOTO-KEEP','CITY-PHOTO-OVERVIEW','CITY-PHOTO-STONE','ORIGINAL'],
+ materialManifest:'public/data/material-manifest.json',
  evidenceLedger:'docs/INTERIOR_EVIDENCE_MATRIX.md',
  sourceManifest:'public/data/source_manifest.json',
  physicalIOSValidation:evidenceSummary.physicalIOSValidation
 };
-const glb=await new GLTFExporter().parseAsync(model,{binary:true,onlyVisible:true});
+const glb=await embedMaterials(await new GLTFExporter().parseAsync(model,{binary:true,onlyVisible:true}));
 await fs.mkdir('public/models',{recursive:true});
 await fs.writeFile('public/models/matsuyama_keep.glb',Buffer.from(glb));
 console.log('Generated matsuyama_keep.glb:',glb.byteLength,'bytes;',model.children.length,'merged meshes');

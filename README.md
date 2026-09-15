@@ -23,7 +23,7 @@ iPhone/iPad：左スティック＋右ドラッグ。同時操作対応。設定
 
 ## 技術
 
-Vite / TypeScript / Three.js。静的メッシュを材質・部位ごとにmergeし、遠景はinstancing。PBR、procedural shader grain、soft shadows、DPR制限。第三者写真の画像テクスチャ、外部フォント、CDNアセットは使用しません。
+Vite / TypeScript / Three.js。静的メッシュを材質・部位ごとにmergeし、遠景はinstancing。GLB埋込PBR（色・法線・粗さ）、soft shadows、DPR制限。第三者写真の画像テクスチャ、外部フォント、CDNアセットは使用しません。
 
 床・ランプ・壁AABBの共通定義と細分化した移動判定で階段と衝突を処理します。独自の歩行領域による落下防止を備えます。
 
@@ -69,7 +69,7 @@ Accuracyは部位ごとに付与します。
 
 [`docs/RIGHTS_AUDIT.md`](docs/RIGHTS_AUDIT.md)、[`ATTRIBUTION.md`](ATTRIBUTION.md)、[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)、[`public/data/source_manifest.json`](public/data/source_manifest.json)を参照。
 
-採用方針：Public Domain / CC0 / CC BY、または行政資料の事実記述。CC BY-SA等のShareAlike素材は今回原則除外します。Google、商用書籍・非オープン図面、ブログ・観光写真、SNS、YouTube、権利不明素材、AI画像、第三者3Dモデルは使用しません。
+採用方針：Public Domain / CC0 / CC BY、または行政資料の事実記述。CC BY-SA等のShareAlike素材は今回原則除外します。Google、商用書籍・非オープン図面、ブログ・観光写真、SNS、YouTube、権利不明素材、AI画像、権利未確認の第三者3Dモデルは使用しません。
 
 写真に写る人物・甲冑等の展示・説明板・写真・絵画等はモデル化しません。採用したCC BY資料は作者・Source・Licence・利用方法をATTRIBUTIONとmanifestへ記録します。
 
@@ -102,3 +102,14 @@ GitHub Pagesは `https://ryotamatsuki.github.io/matsuyamacastle-/` で有効化�
 `MATSUYAMA CASTLE INTERIOR RECONSTRUCTION — B-GRADE VERIFICATION PASS` は現時点では**未宣言**です。Bは一部形態・関係に限定され、主要内部座標をBへ昇格できる写真測量登録が未完了であり、実機iPhone/iPad Safariも未検証だからです。
 
 全項目の状況は [`docs/RELEASE_GATE.md`](docs/RELEASE_GATE.md) を参照してください。証拠が不足する部分は今後もCのまま残します。
+
+
+## 外観・質感の改修
+
+「PLATEAUの外観を見る」で松山市の実LOD2連立天守群を回転・拡大表示できます。公式屋根・壁面と、追加した推定の窓・瓦・配色を区別しています。「散歩をはじめる」は開口部・階段を備えた別の推定内部モデルへ移ります。両モデルは同一の実測内外一体モデルではありません。
+
+正面の三角破風／唐破風、厚みのある白い破風縁、垂木・軒裏、分割した丸瓦、瓦の重なり、最上階高欄、窓枠・建具金物、梁接合部、石の不規則な輪郭を追加しました。独自生成の木目・漆喰・石・瓦・地面・鉄のPBRマップをGLBに埋め込んでいます。
+
+追加モデル：`public/models/matsuyama_plateau_lod2.glb`。出典・変換方法・精度の限界は [EXTERIOR_UPGRADE.md](docs/EXTERIOR_UPGRADE.md)。
+
+素材の再生成：`npm run materials`（Python標準ライブラリのみ）。通常の `npm run model` / `npm run build` は同梱済みの素材と抽出LOD2からネットワーク不要で再生成します。
