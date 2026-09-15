@@ -1,8 +1,9 @@
 import * as T from 'three';
+import {surfaceTriangles,subtractBox} from './envelope.mjs';
 import {mergeGeometries,mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 // Surveyed polygon boundaries are kept intact. Added colours/windows/tile caps
 // are independent visual interpretations, explicitly C and separately named.
-export function buildPlateau(data){
+export function buildPlateau(data,{unified=false}={}){
  const root=new T.Group();root.name='MatsuyamaCastle_PLATEAU_LOD2';
  root.userData={sourceIds:['PLATEAU-2020','CITY-PHOTO-KEEP','CITY-PHOTO-OVERVIEW'],buildingId:data.buildingId,sourceCrs:data.sourceCrs,origin:data.origin,license:'CC BY 4.0',geometry:'source LOD2, local E/up/-N transform; no fitted scale',appearance:'C interpretation; procedural PBR, window placement and tile ornament are not surveyed',sourceManifest:'public/data/source_manifest.json'};
  const mats={plaster: new T.MeshStandardMaterial({color:0xf1ecdf,roughness:.93,vertexColors:true,side:T.DoubleSide}),black:new T.MeshStandardMaterial({color:0x33342f,roughness:.85,vertexColors:true,side:T.DoubleSide}),roof:new T.MeshStandardMaterial({color:0x768188,roughness:.7,vertexColors:true,side:T.DoubleSide}),tile:new T.MeshStandardMaterial({color:0x91999d,roughness:.6,vertexColors:true}),stone:new T.MeshStandardMaterial({color:0xaba596,roughness:.96,vertexColors:true,side:T.DoubleSide}),edge:new T.MeshStandardMaterial({color:0x191d1b,roughness:.7,vertexColors:true,side:T.DoubleSide})};
@@ -30,10 +31,15 @@ export function buildPlateau(data){
   const flat=rings.map(r=>r.map(p=>{const q=p.clone().sub(origin);return new T.Vector2(q.dot(u),q.dot(v));}));
   const all=rings.flat(),uv=flat.flat();const faces=T.ShapeUtils.triangulateShape(flat[0],flat.slice(1));
   const minY=Math.min(...all.map(p=>p.y)),maxY=Math.max(...all.map(p=>p.y));
-  const roof=s.kind==='RoofSurface';const material=roof?'roof':s.kind==='GroundSurface'?'stone':maxY<5?'stone':maxY>22?'plaster':maxY<14?'plaster':'black';
+  const roof=s.kind==='RoofSurface';const material=roof?'roof':s.kind==='GroundSurface'?'stone':maxY<5?'stone':maxY>22?'plaster':maxY<17.5?'black':'black';
   const positions=[],tex=[],colors=[];
-  for(const f of faces)for(const i of f){positions.push(...all[i].toArray());tex.push(uv[i].x*.55,uv[i].y*.55);const tone=.91+.07*Math.sin(origin.x*2.17+origin.z*.7);colors.push(tone,tone,tone);}
-  const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(tex,2));g.setAttribute('color',new T.Float32BufferAttribute(colors,3));g.computeVertexNormals();add(g,material,'Surveyed'+s.kind);
+  const triangles=surfaceTriangles(s,unified);
+  function emit(tris,mat){const positions=[],tex=[],colors=[];for(const triangle of tris)for(const p of triangle){const q=new T.Vector3(...p).sub(origin);positions.push(...p);tex.push(q.dot(u)*.55,q.dot(v)*.55);colors.push(.95,.95,.95);}if(!positions.length)return;const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(tex,2));g.setAttribute('color',new T.Float32BufferAttribute(colors,3));g.computeVertexNormals();add(g,mat,'Surveyed'+s.kind);}
+  if(unified&&s.kind==='WallSurface'&&s.id.includes('p23809')){
+   const fan=polys=>polys.flatMap(p=>Array.from({length:p.length-2},(_,i)=>[p[0],p[i+1],p[i+2]]));
+   emit(fan(triangles.flatMap(t=>subtractBox(t,{x0:-100,x1:100,z0:-100,z1:100,y0:13.2,y1:100}))),'stone');
+   emit(fan(triangles.flatMap(t=>subtractBox(t,{x0:-100,x1:100,z0:-100,z1:100,y0:-100,y1:13.2}))),'black');
+  }else emit(triangles,material);
   const xs=flat[0].map(p=>p.x),ys=flat[0].map(p=>p.y),xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
   const within=(x,y)=>inside(new T.Vector2(x,y),flat[0])&&!flat.slice(1).some(r=>inside(new T.Vector2(x,y),r));
   // Choose the outward/upward normal for decorative offsets independently of winding.
@@ -50,7 +56,7 @@ export function buildPlateau(data){
    }
   }
   // Surface decals, not openings in the source envelope; use only generous rectangular bays.
-  if(s.kind==='WallSurface'&&Math.abs(normal.y)<.12&&xmax-xmin>2.1&&maxY-minY>1.8&&maxY>6){
+  if(!unified&&s.kind==='WallSurface'&&Math.abs(normal.y)<.12&&xmax-xmin>2.1&&maxY-minY>1.8&&maxY>6){
    for(let x=xmin+1;x<xmax-.8;x+=2.05){
     const yy=(ymin+ymax)/2,ww=.62,hh=Math.min(.68,(ymax-ymin)*.28);
     if(![[x-ww,yy-hh],[x+ww,yy-hh],[x+ww,yy+hh],[x-ww,yy+hh]].every(p=>within(...p)))continue;

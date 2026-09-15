@@ -2,3 +2,5 @@
 #hotspot{z-index:3}#hud{z-index:4}#welcome{z-index:5}dialog{z-index:10}
 
 #exterior-view{margin:0 0 14px;font-size:13px}#welcome{pointer-events:none}#welcome button{pointer-events:auto}#welcome nav{pointer-events:auto}
+
+#map-credit{position:fixed;bottom:3px;right:6px;z-index:6;font-size:10px;background:#15221ac9;color:#eee9dc;padding:3px 6px;pointer-events:auto}

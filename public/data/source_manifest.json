@@ -478,5 +478,20 @@
       "zip_sha256": "ddc1d59f58bb502448b7b6d196f3cbdca5dc895e3be9dde5638de3cb6d9f3563",
       "jpg_sha256": "966f25741cc244521ffcd5b178134879729a320c390ee0122b97c23b393a8442"
     }
+  },
+  {
+    "id": "GSI-AERIAL",
+    "title": "地理院タイル 全国最新写真（シームレス）",
+    "author": "国土地理院",
+    "url": "https://maps.gsi.go.jp/development/ichiran.html#seamlessphoto",
+    "original_url": "https://maps.gsi.go.jp/development/ichiran.html#seamlessphoto",
+    "resource_url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg",
+    "accessed": "2026-09-15",
+    "license": "国土地理院コンテンツ利用規約（公共データ利用規約）",
+    "license_url": "https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html",
+    "status": "admitted",
+    "usage": "Zoom18航空写真9枚をPLATEAU座標系へ地理参照し屋外地面へ投影。撮影物の影・樹木・屋根も画像に含む。地盤高さは推定。",
+    "derivative_use": "タイルを地面メッシュに貼り付け。原画の色・内容は維持。",
+    "redistribution_status": "出典を常時表示。取得画像をSHA256付き台帳に固定し同梱。GRUS対象範囲外。"
   }
 ]

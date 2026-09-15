@@ -32,10 +32,10 @@ for buffer in data.get("buffers", []):
     assert "uri" not in buffer, "GLB must be self-contained"
 
 names = [node.get("name", "") for node in data["nodes"]]
-for part in ["Anagura", "Floor0", "Floor1", "Floor2", "Floor3", "VisitorStairs0", "VisitorStairs1", "VisitorStairs2", "Columns", "ExposedBeams", "HongawaraRoof", "TenshumaruStone"]:
+for part in ["Floor0", "Floor1", "Floor2", "Floor3", "VisitorStairs0", "VisitorStairs1", "VisitorStairs2", "Columns", "ExposedBeams", "SurveyedRoofSurface", "SurveyedWallSurface", "InnerWall", "ApertureReveal"]:
     assert any(part in name for name in names), f"Missing required part: {part}"
 
-root = next((node for node in data["nodes"] if node.get("name") == "MatsuyamaKeep_Interpretive_CC_BY_4"), None)
+root = next((node for node in data["nodes"] if node.get("name") == "MatsuyamaCastle_Unified"), None)
 assert root is not None, "Missing reconstruction root node"
 extras = root.get("extras", {})
 assert extras.get("evidenceVersion"), "GLB missing evidence version"
@@ -44,8 +44,9 @@ b_scope = extras.get("bGradeScope", [])
 expected_b = {"exposed-timber-morphology", "window-assembly-morphology", "top-floor-openings"}
 assert set(b_scope) == expected_b, f"Unexpected B-grade scope: {b_scope}"
 assert extras.get("bGradeMeaning") == "corroborated morphology/relationship only; not survey-grade coordinates"
+assert extras.get("assumptions", {}).get("floorElevations") == [9.2, 13.2, 17.6, 21.8]
 source_ids = extras.get("sourceIds", [])
-for required in ["CITY-KEEP", "WM-PD-INSIDE", "WM-PD-TOP", "WM-CCBY-COURTYARD-1", "WM-CCBY-ARMOUR-4", "DPLA-CCBY-WINDOW-1963"]:
+for required in ["PLATEAU-2020", "CITY-KEEP", "WM-PD-INSIDE", "WM-PD-TOP", "WM-CCBY-COURTYARD-1", "WM-CCBY-ARMOUR-4", "DPLA-CCBY-WINDOW-1963"]:
     assert required in source_ids, f"Missing provenance source {required}"
 
 triangles = 0
