@@ -50,8 +50,9 @@ jobs:
         run: |
           mkdir -p public/screenshots
           cp test-results/chromium-exterior.png public/screenshots/
-          cp test-results/chromium-interior.png public/screenshots/
           cp test-results/chromium-plateau.png public/screenshots/
+          cp test-results/webkit-interior.png public/screenshots/
+          cp test-results/mobile-webkit-interior.png public/screenshots/
       - name: Build production without test mutation interface
         run: npm run build
       - name: Verify byte-identical model regeneration
