@@ -7,7 +7,7 @@ export async function embedMaterials(input){
  const chunks=[binary];let length=binary.length;
  const padded=b=>{const p=Buffer.alloc((4-b.length%4)%4);return Buffer.concat([b,p]);};
  doc.images=[];doc.textures=[];doc.samplers=[{magFilter:9729,minFilter:9987,wrapS:10497,wrapT:10497}];
- const families={wood:'timber',edge:'timber',black:'timber',plaster:'plaster',stone:'stone',stone2:'stone',roof:'ceramic',tile:'ceramic',ground:'earth',iron:'iron',tatami:'timber'};
+ const families={wood:'timber',edge:'timber',black:'timber',plaster:'plaster',stone:'stone',stone2:'stone',roof:'ceramic',tile:'ceramic',ground:'earth',iron:'iron',tatami:'timber',ApproachStone_C:'stone',GateThreshold_C:'stone'};
  const cache=new Map();
  async function texture(family,kind){
   const key=family+'-'+kind;if(cache.has(key))return cache.get(key);
