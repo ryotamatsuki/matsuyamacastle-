@@ -1,0 +1,72 @@
+{
+  "version": "2026-09-16-hondan-route-v1",
+  "purpose": "Evidence ledger for the walkable connection from the existing linked-keep courtyard to the Honmaru main plaza.",
+  "coordinate_policy": "PLATEAU and GSI aerial horizontal registration is unchanged. Gate centres, path widths, stair tread/riser dimensions and the vertical closure from the existing y=9.2 courtyard datum are C estimates unless explicitly stated otherwise.",
+  "sources": [
+    {
+      "id": "CITY-SUJIGANE",
+      "organisation": "松山市",
+      "title": "松山城筋鉄門",
+      "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/rekishibunka/bunkazai/kunitouroku/shiro_sujigane.html",
+      "accessed": "2026-09-16",
+      "use": "facts only",
+      "facts": ["筋鉄門は天守と小天守の間に建つ一重櫓門", "三ノ門と共に天守南側の枡形を形成", "間口3m級の門構え"]
+    },
+    {
+      "id": "CITY-SUJIGANE-EAST-WALL",
+      "organisation": "松山市",
+      "title": "松山城筋鉄門東塀",
+      "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/rekishibunka/bunkazai/kuni/sujiganemon_higashi.html",
+      "accessed": "2026-09-16",
+      "use": "facts only",
+      "facts": ["三ノ門南櫓と筋鉄門を結ぶ渡塀", "延長11.13m", "本壇入口から本丸広場大手方向に備える"]
+    },
+    {
+      "id": "CITY-3MON",
+      "organisation": "松山市",
+      "title": "松山城三の門",
+      "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/rekishibunka/bunkazai/kuni/matsuyamajou_3nomon.html",
+      "accessed": "2026-09-16",
+      "use": "facts only",
+      "facts": ["二ノ門を入った左手の天守穴蔵石垣沿いに北面して建つ", "三ノ門を過ぎ天守石垣下を右折すると筋鉄門（内庭入口）に達する"]
+    },
+    {
+      "id": "CITY-2MON",
+      "organisation": "松山市",
+      "title": "松山城二の門",
+      "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/rekishibunka/bunkazai/kuni/matsuyamajou_2nomon.html",
+      "accessed": "2026-09-16",
+      "use": "facts only",
+      "facts": ["本壇進入路の門関係", "二ノ門付近の9段の石段という公式記述を歩行ルートの段数に反映"]
+    },
+    {
+      "id": "CITY-1MON",
+      "organisation": "松山市",
+      "title": "松山城一の門",
+      "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/rekishibunka/bunkazai/kuni/matsuyamajou_1nomon.html",
+      "accessed": "2026-09-16",
+      "use": "facts only",
+      "facts": ["本壇最初の門", "本壇の出入口系統を構成"]
+    },
+    {
+      "id": "CASTLE-OFFICIAL-HONDAN",
+      "organisation": "松山城公式サイト",
+      "title": "天守と本壇",
+      "url": "https://www.matsuyamajo.jp/discover/tenshu.html",
+      "accessed": "2026-09-16",
+      "use": "facts only",
+      "facts": ["本壇は本丸よりさらに約8m高い", "出入口は一ノ門の1か所", "天守までは複数の門を通る"]
+    }
+  ],
+  "implementation": {
+    "PLATEAU_GSI_horizontal_transform_changed": false,
+    "respawn_changed": false,
+    "gate_cut": "south-west end of the current inner-courtyard southern PLATEAU wall; best-fit to documented 筋鉄門 / 筋鉄門東塀 relationship",
+    "gate_cut_accuracy": "B relationship / C coordinates",
+    "documented_stone_steps": 9,
+    "documented_step_geometry_accuracy": "count from official description; tread/riser geometry C",
+    "lower_descent": "C continuity interpolation to meet the existing georeferenced aerial plane",
+    "main_plaza_horizontal_registration": "same local PLATEAU/GSI frame",
+    "main_plaza_vertical_walk_surface_m": 0.05
+  }
+}
