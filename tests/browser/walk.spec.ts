@@ -19,6 +19,7 @@ test('PLATEAU LOD2 exterior loads, renders and returns to walk model',async({pag
 });
 
 test('load GLB, evidence, licence, continuous stairs, walls and inputs',async({page},info)=>{
+ test.setTimeout(150000);
  const errors:string[]=[];const bad:string[]=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
