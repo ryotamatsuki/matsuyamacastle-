@@ -1,8 +1,13 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {Walker,blocked,groundAt} from '../src/world.mjs';
-import {toWorld,toLocal,levels} from '../src/data/unifiedLayout.mjs';
+import {toWorld,toLocal,levels,start} from '../src/data/unifiedLayout.mjs';
+import {routeWaypoints,gateOpenings,documentedNineSteps,mainPlaza} from '../src/data/hondanRoute.mjs';
 function drive(p,points){for(const [x,z] of points){const w=toWorld(x,z);let reached=false;for(let i=0;i<3600;i++){const dx=w.x-p.x,dz=w.z-p.z,n=Math.hypot(dx,dz);if(n<.035){reached=true;break;}p.step(dx/n*2,dz/n*2,1/120);}assert.ok(reached,`Blocked at ${x},${z}: ${JSON.stringify(p)}`);}}
 const ascent=[[0,8],[-2.8,8],[-2.8,4.5],[-2.8,-4.8],[2.8,-4.8],[2.8,-4.5],[2.8,4.8],[-2.8,4.8],[-2.8,4.5],[-2.8,-4.8],[0,-4.8],[0,-2]];
+test('respawn remains exactly on the existing courtyard datum',()=>{const p=new Walker(),l=toLocal(p.x,p.z),s=toLocal(start.x,start.z);assert.ok(Math.abs(l.x-s.x)<1e-9&&Math.abs(l.z-s.z)<1e-9);assert.ok(Math.abs(l.x)<1e-9&&Math.abs(l.z-13.1)<1e-9);assert.equal(p.y,9.2);});
 test('one continuous courtyard-to-top-and-back route crosses actual envelope without teleporting',()=>{const p=new Walker();drive(p,ascent);assert.equal(p.y,21.8);drive(p,[...ascent].reverse());drive(p,[[0,13.1]]);assert.equal(p.y,9.2);});
 test('entrance is open but neighbouring original wall and inferred inner wall remain solid',()=>{for(const x of [0,2.4,-2.4]){const p=toWorld(x,10.29);assert.equal(blocked(p.x,9.2,p.z),x!==0);}const p=toWorld(0,10.29);assert.equal(groundAt(p.x,p.z,9.4),9.2);});
+test('best-fit courtyard gate is cut only at its registered opening box',()=>{const g=gateOpenings[0],cz=(g.z0+g.z1)/2,inside=toWorld((g.x0+g.x1)/2,cz),neighbour=toWorld(2.2,cz);assert.equal(blocked(inside.x,9.2,inside.z),false);assert.equal(blocked(neighbour.x,9.2,neighbour.z),true);assert.equal(groundAt(inside.x,inside.z,9.4),9.2);});
+test('courtyard reaches the georeferenced Honmaru plaza and returns without teleporting',()=>{const p=new Walker();drive(p,routeWaypoints);assert.ok(p.y<=mainPlaza.y+.02,`plaza y=${p.y}`);const l=toLocal(p.x,p.z);assert.ok(l.z>=mainPlaza.z0&&l.z<=mainPlaza.z1);drive(p,[...routeWaypoints].reverse());drive(p,[[0,13.1]]);assert.equal(p.y,9.2);});
+test('official nine-step count is represented exactly and descends safely',()=>{assert.equal(documentedNineSteps.length,9);for(let i=1;i<documentedNineSteps.length;i++)assert.ok(documentedNineSteps[i].y<documentedNineSteps[i-1].y);assert.ok(documentedNineSteps.every((s,i)=>s.step===i+1&&s.stepCount===9));});
 test('upper exterior constrains walker even at an open window sill',()=>{const p=new Walker(),w=toWorld(0,-2);Object.assign(p,w,{y:21.8});for(let i=0;i<1200;i++)p.step(4,0,1/120);assert.ok(toLocal(p.x,p.z).x<levels[3].width/2);assert.equal(p.y,21.8);});
