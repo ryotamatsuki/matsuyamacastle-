@@ -12,10 +12,26 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "copyrighted page; factual statements only",
-    "depicts": ["Matsuyama Castle keep", "architectural description"],
+    "depicts": [
+      "Matsuyama Castle keep",
+      "architectural description"
+    ],
     "estimated_floor": "all",
-    "usable_for": ["construction date", "storey count", "6 ken x 4.5 ken top core", "1F/2F musha-bashiri widths", "exposed corridor beams", "nurigome lattice", "raised board shutters", "inner sliding earthen doors", "courtyard entrance route"],
-    "excluded_elements": ["page photographs", "prose reproduction"],
+    "usable_for": [
+      "construction date",
+      "storey count",
+      "6 ken x 4.5 ken top core",
+      "1F/2F musha-bashiri widths",
+      "exposed corridor beams",
+      "nurigome lattice",
+      "raised board shutters",
+      "inner sliding earthen doors",
+      "courtyard entrance route"
+    ],
+    "excluded_elements": [
+      "page photographs",
+      "prose reproduction"
+    ],
     "derivative_use": "Architectural facts only; no image or prose copied",
     "usage": "Architectural facts only; no image/prose reproduction",
     "confidence": "high for stated facts",
@@ -35,9 +51,13 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "open-data dataset metadata",
-    "depicts": ["designated cultural properties in Matsuyama"],
+    "depicts": [
+      "designated cultural properties in Matsuyama"
+    ],
     "estimated_floor": "n/a",
-    "usable_for": ["designation and building-list facts"],
+    "usable_for": [
+      "designation and building-list facts"
+    ],
     "excluded_elements": [],
     "derivative_use": "Facts only",
     "usage": "Designation reference only",
@@ -58,10 +78,16 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "policy page",
-    "depicts": ["open-data licensing policy"],
+    "depicts": [
+      "open-data licensing policy"
+    ],
     "estimated_floor": "n/a",
-    "usable_for": ["licensing boundary: CC BY applies only to designated open-data content"],
-    "excluded_elements": ["non-open-data city website content"],
+    "usable_for": [
+      "licensing boundary: CC BY applies only to designated open-data content"
+    ],
+    "excluded_elements": [
+      "non-open-data city website content"
+    ],
     "derivative_use": "None",
     "usage": "Policy checked; not evidence for keep geometry",
     "confidence": "high",
@@ -81,11 +107,25 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "copyright holder dedicated the photograph to the public domain",
-    "file_metadata": {"width": 4256, "height": 2832, "sha1": "4b6373d8f0a684aaeb7f0f681acefb7931596380", "sha256": null},
-    "depicts": ["interior of Matsuyama Castle keep"],
+    "file_metadata": {
+      "width": 4256,
+      "height": 2832,
+      "sha1": "4b6373d8f0a684aaeb7f0f681acefb7931596380",
+      "sha256": null
+    },
+    "depicts": [
+      "interior of Matsuyama Castle keep"
+    ],
     "estimated_floor": "not asserted from metadata alone",
-    "usable_for": ["visible timber interior morphology", "cross-view architectural corroboration"],
-    "excluded_elements": ["people if any", "modern exhibits", "labels and display material"],
+    "usable_for": [
+      "visible timber interior morphology",
+      "cross-view architectural corroboration"
+    ],
+    "excluded_elements": [
+      "people if any",
+      "modern exhibits",
+      "labels and display material"
+    ],
     "derivative_use": "Architectural observation only; photograph is not used as a texture",
     "usage": "Evidence for exposed timber/interior morphology only; no pixel texture bundled",
     "confidence": "medium until camera/floor registration is independently established",
@@ -105,11 +145,25 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "copyright holder dedicated the photograph to the public domain",
-    "file_metadata": {"width": 4256, "height": 2832, "sha1": "40f4524273d95637f2331b0772462ab4abe08d66", "sha256": null},
-    "depicts": ["top of Matsuyama Castle keep"],
+    "file_metadata": {
+      "width": 4256,
+      "height": 2832,
+      "sha1": "40f4524273d95637f2331b0772462ab4abe08d66",
+      "sha256": null
+    },
+    "depicts": [
+      "top of Matsuyama Castle keep"
+    ],
     "estimated_floor": "3F/top",
-    "usable_for": ["top-floor interior morphology", "visible openings and timber structure"],
-    "excluded_elements": ["people if any", "modern exhibits", "labels and display material"],
+    "usable_for": [
+      "top-floor interior morphology",
+      "visible openings and timber structure"
+    ],
+    "excluded_elements": [
+      "people if any",
+      "modern exhibits",
+      "labels and display material"
+    ],
     "derivative_use": "Architectural observation only; photograph is not used as a texture",
     "usage": "Evidence for top-floor morphology only; exact bay coordinates require cross-view registration",
     "confidence": "high for top-floor identity; medium for unregistered geometry",
@@ -129,11 +183,25 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "copyrighted; licensed CC BY 4.0 by author",
-    "file_metadata": {"width": 5008, "height": 3391, "sha1": "9aef5b57a8d58205c3c43f2b2c5bfd06859c710b", "sha256": null},
-    "depicts": ["view from Matsuyama Castle keep toward inner courtyard"],
+    "file_metadata": {
+      "width": 5008,
+      "height": 3391,
+      "sha1": "9aef5b57a8d58205c3c43f2b2c5bfd06859c710b",
+      "sha256": null
+    },
+    "depicts": [
+      "view from Matsuyama Castle keep toward inner courtyard"
+    ],
     "estimated_floor": "not asserted from title alone",
-    "usable_for": ["orientation/view-opening corroboration after camera registration"],
-    "excluded_elements": ["people", "signage", "modern exhibits", "unrelated exterior details"],
+    "usable_for": [
+      "orientation/view-opening corroboration after camera registration"
+    ],
+    "excluded_elements": [
+      "people",
+      "signage",
+      "modern exhibits",
+      "unrelated exterior details"
+    ],
     "derivative_use": "Architectural observation only; no texture or pixel copy",
     "usage": "Secondary independent-author evidence for view/opening relationships; no exact coordinates asserted yet",
     "confidence": "medium pending camera/floor registration",
@@ -153,11 +221,26 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "copyrighted; licensed CC BY 4.0 by author",
-    "file_metadata": {"width": 3747, "height": 4794, "sha1": "af8d78aaf9d1473c39a75c85eef32e8dd1bbb4ba", "sha256": null},
-    "depicts": ["interior of Matsuyama Castle keep", "modern armour exhibit"],
+    "file_metadata": {
+      "width": 3747,
+      "height": 4794,
+      "sha1": "af8d78aaf9d1473c39a75c85eef32e8dd1bbb4ba",
+      "sha256": null
+    },
+    "depicts": [
+      "interior of Matsuyama Castle keep",
+      "modern armour exhibit"
+    ],
     "estimated_floor": "not asserted from metadata alone",
-    "usable_for": ["background architectural timber morphology only"],
-    "excluded_elements": ["armour exhibit", "display case", "labels", "people"],
+    "usable_for": [
+      "background architectural timber morphology only"
+    ],
+    "excluded_elements": [
+      "armour exhibit",
+      "display case",
+      "labels",
+      "people"
+    ],
     "derivative_use": "Architectural background observation only; exhibit is explicitly excluded",
     "usage": "Independent-author interior corroboration; no exhibit or image pixels reproduced",
     "confidence": "medium until camera/floor registration is independently established",
@@ -177,11 +260,24 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "copyrighted; GLAM record states CC BY 4.0",
-    "file_metadata": {"width": 1500, "height": 2226, "sha1": null, "sha256": null, "date": "1963-06-26"},
-    "depicts": ["window at Matsuyama Castle"],
+    "file_metadata": {
+      "width": 1500,
+      "height": 2226,
+      "sha1": null,
+      "sha256": null,
+      "date": "1963-06-26"
+    },
+    "depicts": [
+      "window at Matsuyama Castle"
+    ],
     "estimated_floor": "unknown",
-    "usable_for": ["generic Matsuyama Castle window morphology together with CITY-KEEP"],
-    "excluded_elements": ["floor-specific placement claims", "dimensions not recoverable from catalog metadata alone"],
+    "usable_for": [
+      "generic Matsuyama Castle window morphology together with CITY-KEEP"
+    ],
+    "excluded_elements": [
+      "floor-specific placement claims",
+      "dimensions not recoverable from catalog metadata alone"
+    ],
     "derivative_use": "Architectural observation only; no photo texture copied",
     "usage": "Historical cross-check for window morphology; not used to assign a window to a specific floor/bay",
     "confidence": "high for subject identity and licence; low for floor assignment",
@@ -201,10 +297,14 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "copyrighted; share-alike licence",
-    "depicts": ["Matsuyama Castle keep exterior"],
+    "depicts": [
+      "Matsuyama Castle keep exterior"
+    ],
     "estimated_floor": "n/a",
     "usable_for": [],
-    "excluded_elements": ["entire file for reconstruction input in this project"],
+    "excluded_elements": [
+      "entire file for reconstruction input in this project"
+    ],
     "derivative_use": "None",
     "usage": "Excluded to avoid ShareAlike derivative-scope questions",
     "confidence": "high",
@@ -215,25 +315,39 @@
   {
     "id": "PLATEAU-2020",
     "title": "松山市3D都市モデル 2020",
-    "source_organisation": "国土交通省 / G空間情報センター",
-    "author": "国土交通省 / G空間情報センター",
+    "source_organisation": "松山市 / 国土交通省 Project PLATEAU / G空間情報センター",
+    "author": "松山市",
     "url": "https://www.geospatial.jp/ckan/dataset/plateau-38201-matsuyama-shi-2020",
     "original_url": "https://www.geospatial.jp/ckan/dataset/plateau-38201-matsuyama-shi-2020",
     "archive_url": null,
-    "license": "unverified-resource",
-    "license_url": null,
-    "accessed": "2026-09-14",
-    "retrieved_date": "2026-09-14",
-    "copyright_status": "resource-specific terms not verified",
-    "depicts": ["Matsuyama 3D city model"],
+    "license": "CC BY 4.0 (PLATEAU site policy permits CC BY use)",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "accessed": "2026-09-15",
+    "retrieved_date": "2026-09-15",
+    "copyright_status": "Copyright Matsuyama City; PLATEAU policy section 3 explicitly permits CC BY use",
+    "depicts": [
+      "Matsuyama 3D city model"
+    ],
     "estimated_floor": "n/a",
-    "usable_for": [],
-    "excluded_elements": ["all geometry"],
-    "derivative_use": "None",
-    "usage": "No import until exact downloadable-resource terms and castle coverage are verified",
-    "confidence": "n/a",
-    "redistribution_status": "not bundled",
-    "status": "excluded"
+    "usable_for": [
+      "LOD2 exterior roof/wall/ground polygons of identified castle complex"
+    ],
+    "excluded_elements": [
+      "LOD0 zero-elevation footprint",
+      "photo textures",
+      "interior inference from LOD2"
+    ],
+    "derivative_use": "Extracted 471 LOD2 polygons; converted latitude/longitude/elevation to local E/up/-N metres; triangulated with holes; added original PBR and separately tagged C tile/window details",
+    "usage": "公式LOD2の連立天守群を抽出・座標変換・三角形化し、材質と推定の窓・瓦を追加。散歩用内部の実測根拠にはしない。",
+    "confidence": "source LOD2 exterior envelope only; added appearance C",
+    "redistribution_status": "extracted polygon data and derived GLB bundled under CC BY 4.0",
+    "status": "admitted",
+    "resource_id": "39623fcf-fed2-4940-9324-fff13f350b5a",
+    "resource_url": "https://assets.cms.plateau.reearth.io/assets/69/125f59-99ff-4fa5-9517-0ff225f9997d/38201_matsuyama-shi_city_2020_citygml_7_op.zip",
+    "policy_url": "https://www.mlit.go.jp/plateau/site-policy/",
+    "building_id": "bldg_adf19f2c-f291-4b52-b75f-f883ce5c8e3e",
+    "source_mesh": "udx/bldg/50326611_bldg_6697_op.gml",
+    "source_mesh_sha256": "4812d35a05234c5d01991e84058e2eda1b66520685a3021c62853c3bc8c6e53d"
   },
   {
     "id": "ORIGINAL",
@@ -248,14 +362,121 @@
     "accessed": "2026-09-15",
     "retrieved_date": "2026-09-15",
     "copyright_status": "original project output",
-    "depicts": ["procedurally generated reconstruction"],
+    "depicts": [
+      "procedurally generated reconstruction"
+    ],
     "estimated_floor": "all",
-    "usable_for": ["generated geometry", "procedural materials", "evidence metadata"],
+    "usable_for": [
+      "generated geometry",
+      "procedural materials",
+      "evidence metadata"
+    ],
     "excluded_elements": [],
     "derivative_use": "Original generation from admitted observations, factual constraints and labelled assumptions",
     "usage": "Original procedural output; no third-party image texture",
     "confidence": "varies by element; see docs/ACCURACY.md",
     "redistribution_status": "permitted under CC BY 4.0",
     "status": "admitted"
+  },
+  {
+    "id": "CITY-PHOTO-KEEP",
+    "title": "松山城（天守）",
+    "author": "松山市",
+    "source_organisation": "松山市 公園管理課",
+    "url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.html",
+    "original_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.html",
+    "resource_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.files/7.zip",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "policy_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/top.html",
+    "accessed": "2026-09-15",
+    "retrieved_date": "2026-09-15",
+    "status": "admitted",
+    "copyright_status": "Copyright Matsuyama City; designated open-data photograph",
+    "usable_for": [
+      "正面下段の三角破風・中段の唐破風",
+      "白い軒裏と垂木",
+      "軒丸瓦",
+      "下見板と最上階高欄"
+    ],
+    "excluded_elements": [
+      "people",
+      "signage",
+      "unrelated exhibits"
+    ],
+    "usage": "公式写真の建築形態と配色を参照して3D表現を加工。写真ピクセルを素材には使用しない。",
+    "derivative_use": "Architectural morphology and palette reference; generated geometry/materials are adaptations, no photo texture",
+    "confidence": "visible morphology only; dimensions and exact placement C",
+    "redistribution_status": "original photograph not bundled; original procedural adaptations attributed",
+    "file_metadata": {
+      "zip_sha256": "54acf2ecc0e431638587aa2e07f0709c1474f921128e3dbc7de1f15cfce75b5b",
+      "jpg_sha256": "487b5ef42a8db6e4bb3baafd7c3ff1ddf421a36c0cd88771ae23fa0a62fa8ac3"
+    }
+  },
+  {
+    "id": "CITY-PHOTO-OVERVIEW",
+    "title": "松山城（全景）",
+    "author": "松山市",
+    "source_organisation": "松山市 公園管理課",
+    "url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.html",
+    "original_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.html",
+    "resource_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.files/1.zip",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "policy_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/top.html",
+    "accessed": "2026-09-15",
+    "retrieved_date": "2026-09-15",
+    "status": "admitted",
+    "copyright_status": "Copyright Matsuyama City; designated open-data photograph",
+    "usable_for": [
+      "連立天守の視覚照合",
+      "灰色の瓦と白漆喰・黒板張りの配色"
+    ],
+    "excluded_elements": [
+      "people",
+      "signage",
+      "unrelated exhibits"
+    ],
+    "usage": "公式写真の建築形態と配色を参照して3D表現を加工。写真ピクセルを素材には使用しない。",
+    "derivative_use": "Architectural morphology and palette reference; generated geometry/materials are adaptations, no photo texture",
+    "confidence": "visible morphology only; dimensions and exact placement C",
+    "redistribution_status": "original photograph not bundled; original procedural adaptations attributed",
+    "file_metadata": {
+      "zip_sha256": "1a4a3f702bfb8e8be207f124d72241b6ed823fa2ea988a5caa321ce0aab93361",
+      "jpg_sha256": "59dc097c99cc3aff9519259a3e9a94d6ede23b46acc362f0b1da892ac06a4900"
+    }
+  },
+  {
+    "id": "CITY-PHOTO-STONE",
+    "title": "松山城（屏風折石垣）",
+    "author": "松山市",
+    "source_organisation": "松山市 公園管理課",
+    "url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.html",
+    "original_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.html",
+    "resource_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.files/8.zip",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "policy_url": "https://www.city.matsuyama.ehime.jp/shisei/opendata/top.html",
+    "accessed": "2026-09-15",
+    "retrieved_date": "2026-09-15",
+    "status": "admitted",
+    "copyright_status": "Copyright Matsuyama City; designated open-data photograph",
+    "usable_for": [
+      "不規則な石の形",
+      "石肌・乾式目地の色調"
+    ],
+    "excluded_elements": [
+      "people",
+      "signage",
+      "unrelated exhibits"
+    ],
+    "usage": "公式写真の建築形態と配色を参照して3D表現を加工。写真ピクセルを素材には使用しない。",
+    "derivative_use": "Architectural morphology and palette reference; generated geometry/materials are adaptations, no photo texture",
+    "confidence": "visible morphology only; dimensions and exact placement C",
+    "redistribution_status": "original photograph not bundled; original procedural adaptations attributed",
+    "file_metadata": {
+      "zip_sha256": "ddc1d59f58bb502448b7b6d196f3cbdca5dc895e3be9dde5638de3cb6d9f3563",
+      "jpg_sha256": "966f25741cc244521ffcd5b178134879729a320c390ee0122b97c23b393a8442"
+    }
   }
 ]

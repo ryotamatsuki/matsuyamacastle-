@@ -1,0 +1,10 @@
+import fs from 'node:fs/promises';
+import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
+import {buildPlateau} from '../src/plateau.mjs';
+import {embedMaterials} from './embed-materials.mjs';
+globalThis.FileReader=class{readAsArrayBuffer(b){b.arrayBuffer().then(v=>{this.result=v;this.onloadend?.();});}readAsDataURL(b){b.arrayBuffer().then(v=>{this.result='data:'+b.type+';base64,'+Buffer.from(v).toString('base64');this.onloadend?.();});}};
+const data=JSON.parse(await fs.readFile('public/data/plateau-castle-lod2.json','utf8'));
+const model=buildPlateau(data);
+const glb=await embedMaterials(await new GLTFExporter().parseAsync(model,{binary:true}));
+await fs.writeFile('public/models/matsuyama_plateau_lod2.glb',glb);
+console.log('PLATEAU LOD2:',data.surfaceCount,'source polygons;',glb.length,'bytes');

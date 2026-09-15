@@ -6,10 +6,17 @@ test('load GLB, evidence, licence, continuous stairs, walls and inputs',async({p
  page.on('response',r=>{if(r.status()>=400)bad.push(r.status()+' '+r.url());});
  await page.goto('./');await page.waitForFunction(()=> (window as any).__castle?.ready);
  await expect(page.locator('#start')).toBeEnabled();
+ await page.getByRole('button',{name:'PLATEAUの外観を見る',exact:true}).click();
+ await expect(page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true})).toBeVisible({timeout:60000});
+ await expect(page.locator('#load-status')).toContainText('公式LOD2形状');
+ await page.screenshot({path:'test-results/'+info.project.name+'-plateau.png'});
+ await page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true}).click();
  await page.screenshot({path:'test-results/'+info.project.name+'-exterior.png'});
  await page.getByRole('button',{name:'出典・ライセンス',exact:true}).click();
  await expect(page.locator('#panel')).toBeVisible();
  await expect(page.locator('#panel')).toContainText('CITY-KEEP');
+ await expect(page.locator('#panel')).toContainText('CITY-PHOTO-KEEP');
+ await expect(page.locator('#panel')).toContainText('PLATEAU-2020');
  await expect(page.locator('#panel')).toContainText('WM-PD-INSIDE');
  await expect(page.locator('#panel')).toContainText('WM-CCBY-COURTYARD-1');
  await expect(page.locator('#panel')).toContainText('CC BY 4.0');

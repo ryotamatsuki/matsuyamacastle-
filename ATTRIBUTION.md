@@ -60,6 +60,23 @@
 
 ## Excluded sources
 
-CC BY-SA / GFDL等のShareAlike素材は今回の復元入力から原則除外します。PLATEAUは今回の内部復元には未採用です。Google、商用書籍・図面、ブログ・観光写真、SNS、YouTube、権利不明素材、AI画像、第三者3Dモデルは使用しません。
+CC BY-SA / GFDL等のShareAlike素材は今回の復元入力から原則除外します。PLATEAUは今回の内部復元には未採用です。Google、商用書籍・図面、ブログ・観光写真、SNS、YouTube、権利不明素材、AI画像、権利未確認の第三者3Dモデルは使用しません。
 
 写真に写り込んだ現代展示・人物・説明板・写真・絵画等はモデル化しません。写真・既存平面図のトレースは行っていません。詳細は `docs/RIGHTS_AUDIT.md` と `docs/INTERIOR_EVIDENCE_MATRIX.md` を参照してください。
+
+
+## 外観改修（2026-09-15）
+
+この作品は以下の著作物を参照・加工して利用しています。
+
+- **松山城（天守・全景・屏風折石垣）、松山市、[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**。
+  [公式配布ページ](https://www.city.matsuyama.ehime.jp/shisei/opendata/metadata/matsuyamajyo.html)。配布ZIP：7.zip、1.zip、8.zip。
+  変更：建築形態・配色を参照して破風、軒裏、瓦、高欄、石肌をパラメトリックに生成。写真ピクセルはテクスチャに使用しない。
+- **松山市3D都市モデル（2020年度・標準製品仕様v4）、松山市 / 国土交通省 Project PLATEAU、[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**。
+  [G空間情報センター](https://www.geospatial.jp/ckan/dataset/plateau-38201-matsuyama-shi-2020)、[適用サイトポリシー](https://www.mlit.go.jp/plateau/site-policy/) 第3項。
+  CityGMLリソース `39623fcf-fed2-4940-9324-fff13f350b5a`、メッシュ `50326611_bldg_6697_op.gml`、建物 `bldg_adf19f2c-f291-4b52-b75f-f883ce5c8e3e`。
+  変更：LOD2の471ポリゴンを抽出、ローカル座標へ変換、穴付き三角形化、独自PBR・推定窓・瓦を追加。
+  原形状は `public/data/plateau-castle-lod2.json`、加工モデルは `public/models/matsuyama_plateau_lod2.glb`。
+
+本作品は松山市・国土交通省の公式制作物、公認・監修モデルではありません。
+PBRマップは `scripts/generate-materials.py` による独自の数学的合成です（CC BY 4.0）。原写真・PLATEAUの写真テクスチャは同梱していません。

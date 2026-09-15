@@ -68,7 +68,7 @@ Status: rights-clean interior evidence admitted with per-element accuracy bounds
 ## Explicit exclusions
 
 - CC BY-SA / GFDL等のShareAlike素材: 今回は原則EXCLUDED。例 `WIKIMEDIA-CCBYSA-KEEP` は `excluded_pending_license_analysis` として記録し、モデル入力にしない。
-- PLATEAU-2020: リソース単位の条件と内部利用可能性を今回の入力として確定していないためEXCLUDED。
+- PLATEAU-2020: 2026-09-15の外観改修で、配布リソース・適用条件・建物IDを確認し外観LOD2に限りADMITTEDへ変更。内部の実測根拠には用いない。詳細は EXTERIOR_UPGRADE.md。
 - Google Maps / Street View / Google画像検索
 - 一般ブログ・観光サイト
 - Instagram / X / Facebook / Pinterest
@@ -118,3 +118,6 @@ GLBには生成時刻を埋め込まない。時刻はbyte-identical再生成を
 Rights gate for admitted inputs: **PASS within the documented scope**.
 
 Full `MATSUYAMA CASTLE INTERIOR RECONSTRUCTION — B-GRADE VERIFICATION PASS`: **NOT PASSED**. Bが主要内部座標全体には及んでおらず、実機iPhone/iPad Safari検証も未完了のため。
+
+
+外観LOD2と松山市のCC BY公式写真の追加監査は `EXTERIOR_UPGRADE.md` と `public/data/exterior-rights-evidence.json` を参照。サイトポリシーはPDL1.0との表記だが、同第3項（3）はCC BYによる利用を明示的に許諾しているため、本成果はCC BY 4.0の条件で使用する。

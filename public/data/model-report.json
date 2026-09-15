@@ -1,11 +1,12 @@
 {
   "file": "public/models/matsuyama_keep.glb",
-  "source_revision": "2d51cdd05b94df1fc20ec0dc80fa95403372cd6f",
-  "sha256": "a9aa308aa6b0d098943d6398d1cba9c98050059a0dfdd6a7296a758e55a50464",
-  "bytes": 3414332,
-  "mesh_count": 97,
-  "triangles": 46404,
-  "image_count": 0,
+  "source_revision": "local",
+  "sha256": "8f9932201cf6a2eb596a0a7a990ec06237f0b4d6aeac04412e8aeea71d3dc1b0",
+  "bytes": 20703812,
+  "mesh_count": 117,
+  "triangles": 312988,
+  "image_count": 18,
+  "image_origin": "audited ORIGINAL procedural synthesis",
   "self_contained": true,
   "licence": "CC-BY-4.0",
   "overall_accuracy": "C",
@@ -23,7 +24,11 @@
     "WM-PD-TOP",
     "WM-CCBY-COURTYARD-1",
     "WM-CCBY-ARMOUR-4",
-    "DPLA-CCBY-WINDOW-1963"
+    "DPLA-CCBY-WINDOW-1963",
+    "CITY-PHOTO-KEEP",
+    "CITY-PHOTO-OVERVIEW",
+    "CITY-PHOTO-STONE",
+    "ORIGINAL"
   ],
   "physical_iOS_validation": "NOT VERIFIED",
   "release_pass": false

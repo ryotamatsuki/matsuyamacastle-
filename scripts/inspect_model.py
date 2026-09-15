@@ -12,7 +12,22 @@ assert magic == b"glTF" and version == 2 and length == len(raw)
 json_length, json_type = struct.unpack_from("<II", raw, 12)
 assert json_type == 0x4E4F534A
 data = json.loads(raw[20:20 + json_length])
-assert not data.get("images"), "Third-party/image textures are not admitted"
+# Only our audited procedural PNG maps may be embedded. Hash every actual image byte.
+materials = json.loads(Path("public/data/material-manifest.json").read_text())
+allowed = {m["sha256"] for m in materials if m["source"] == "ORIGINAL"}
+bin_start = 28 + json_length
+assert data.get("images"), "Portable PBR images missing"
+for image in data["images"]:
+    assert "uri" not in image and image["mimeType"] == "image/png"
+    assert image.get("extras", {}).get("sourceId") == "ORIGINAL"
+    view = data["bufferViews"][image["bufferView"]]
+    start = bin_start + view.get("byteOffset", 0)
+    payload = raw[start:start + view["byteLength"]]
+    assert hashlib.sha256(payload).hexdigest() in allowed, "Unregistered texture pixels"
+for material in data["materials"]:
+    assert material.get("normalTexture"), "Missing portable normal map"
+    assert material["pbrMetallicRoughness"].get("baseColorTexture")
+    assert material["pbrMetallicRoughness"].get("metallicRoughnessTexture")
 for buffer in data.get("buffers", []):
     assert "uri" not in buffer, "GLB must be self-contained"
 
@@ -48,6 +63,7 @@ report = {
     "mesh_count": len(data["meshes"]),
     "triangles": triangles,
     "image_count": len(data.get("images", [])),
+    "image_origin": "audited ORIGINAL procedural synthesis",
     "self_contained": True,
     "licence": "CC-BY-4.0",
     "overall_accuracy": "C",
