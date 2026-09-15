@@ -17,3 +17,17 @@ test('all PBR files are original and exactly match the material ledger',()=>{
  const ledger=JSON.parse(fs.readFileSync('public/data/material-manifest.json'));assert.equal(ledger.length,18);
  for(const m of ledger){assert.equal(m.source,'ORIGINAL');assert.equal(createHash('sha256').update(fs.readFileSync(m.path)).digest('hex'),m.sha256);}
 });
+
+import {surfaceTriangles} from '../src/envelope.mjs';
+import {openings,toWorld} from '../src/data/unifiedLayout.mjs';
+import * as T from 'three';
+test('entrance removes rendered triangles, preserving original wall outside the aperture',()=>{
+ const triangles=data.surfaces.filter(s=>s.kind==='WallSurface').flatMap(s=>surfaceTriangles(s));
+ function intersects(x,y,z){const w=toWorld(x,z),o=new T.Vector3(w.x,y,w.z),d=new T.Vector3(-.015,0,-1).normalize(),ray=new T.Ray(o,d),hit=new T.Vector3();return triangles.some(t=>ray.intersectTriangle(...t.map(p=>new T.Vector3(...p)),false,hit)&&o.distanceTo(hit)<3);}
+ assert.equal(intersects(0,10.5,11.5),false);assert.equal(intersects(2.4,10.5,11.5),true);
+ assert.ok(openings.every(o=>o.accuracy.includes('C coordinates')));
+});
+test('GSI aerial snapshot is original JPEG bytes with georeferenced corners and fixed hashes',()=>{
+ const ledger=JSON.parse(fs.readFileSync('public/data/aerial-tiles.json'));assert.equal(ledger.tiles.length,9);
+ for(const t of ledger.tiles){const bytes=Buffer.from(t.dataUri.split(',')[1],'base64');assert.equal(createHash('sha256').update(bytes).digest('hex'),t.sha256);assert.equal(bytes[0],255);assert.equal(bytes[1],216);assert.ok(t.nw[0]<t.se[0]&&t.nw[1]<t.se[1]);assert.ok(t.url.startsWith('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/'));}
+});

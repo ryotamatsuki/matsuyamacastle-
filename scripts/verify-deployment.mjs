@@ -18,11 +18,11 @@ try{
  await page.locator('#start').click();
  await page.waitForFunction(()=>window.__castle.state.active);
  await page.keyboard.down('KeyW');
- await page.waitForFunction(()=>window.__castle.state.z<31,{},{timeout:20000});
+ await page.waitForFunction(()=>window.__castle.state.z<7.7,{},{timeout:20000});
  await page.keyboard.up('KeyW');
  if(await page.evaluate(()=>typeof window.__walkTest!=='undefined'))throw Error('Production exposes test mutation API');
  const assets=[];
- for(const asset of ['models/matsuyama_keep.glb','data/source_manifest.json','data/dependency-notices.txt','data/model-report.json']){
+ for(const asset of ['models/matsuyama_keep.glb','data/source_manifest.json','data/dependency-notices.txt','data/model-report.json','data/aerial-tiles.json']){
   const r=await page.request.get(new URL(asset,url).href);
   if(r.status()!==200)throw Error('Asset status '+r.status()+': '+asset);
   assets.push({asset,status:r.status()});

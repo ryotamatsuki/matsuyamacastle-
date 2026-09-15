@@ -1,3 +1,5 @@
+> 更新：散歩本体をPLATEAUと一体化しました。現在の寸法・推定値・開口・航空写真の扱いは [一体型モデル仕様](docs/UNIFIED_MODEL.md) を参照してください。以下の従来の階高3.6m・独立外観に関する記述は旧仕様です。
+
 # 松山城 3D WALK
 MATSUYAMA CASTLE VIRTUAL WALK
 

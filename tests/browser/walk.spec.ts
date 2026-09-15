@@ -8,16 +8,16 @@ function watchPage(page:any){
  return {errors,bad};
 }
 
-test('PLATEAU LOD2 exterior loads, renders and returns to walk model',async({page},info)=>{
+test('single PLATEAU model remains loaded between orbit and walking',async({page},info)=>{
  const {errors,bad}=watchPage(page);
  await page.goto('./');
  await page.waitForFunction(()=> (window as any).__castle?.ready);
- await page.getByRole('button',{name:'PLATEAUの外観を見る',exact:true}).click();
- await expect(page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true})).toBeVisible({timeout:60000});
+ await page.getByRole('button',{name:'連立天守群を見渡す',exact:true}).click();
+ await expect(page.getByRole('button',{name:'初期視点に戻す',exact:true})).toBeVisible({timeout:60000});
  await page.waitForFunction(()=>{const s=(window as any).__castle?.state;return s?.surveyReady&&s?.surveyMode;},{timeout:60000});
- await expect(page.locator('#load-status')).toContainText('公式LOD2形状');
+ await expect(page.locator('#load-status')).toContainText('PLATEAU連立天守群');
  await page.screenshot({path:'test-results/'+info.project.name+'-plateau.png'});
- await page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true}).click();
+ await page.getByRole('button',{name:'初期視点に戻す',exact:true}).click();
  await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.surveyMode)).toBe(false);
  await page.screenshot({path:'test-results/'+info.project.name+'-exterior.png'});
  expect(errors).toEqual([]);expect(bad).toEqual([]);
@@ -36,7 +36,7 @@ test('evidence, licence, production input and rendered interior',async({page},in
  await expect(page.locator('#panel')).toContainText('WM-PD-INSIDE');
  await expect(page.locator('#panel')).toContainText('WM-CCBY-COURTYARD-1');
  await expect(page.locator('#panel')).toContainText('CC BY 4.0');
- await expect(page.locator('#panel')).toContainText('モデル全体の正確なジオメトリはC');
+ await expect(page.locator('#panel')).toContainText('内部の正確なジオメトリはC');
  await page.locator('#close-panel').click();
  await page.getByRole('button',{name:'復元について',exact:true}).click();
  await expect(page.locator('#panel')).toContainText('B');
@@ -55,24 +55,26 @@ test('evidence, licence, production input and rendered interior',async({page},in
   await page.locator('#look').dispatchEvent('pointermove',{pointerId:12,pointerType:'touch',clientX:320,clientY:305});
   await page.waitForTimeout(450);
   await joy.dispatchEvent('pointerup',{pointerId:11,pointerType:'touch'});await page.locator('#look').dispatchEvent('pointerup',{pointerId:12,pointerType:'touch'});
-  const state=await page.evaluate(()=> (window as any).__castle.state);expect(state.z).toBeLessThan(31);expect(state.yaw).not.toBe(0);
+  const state=await page.evaluate(()=> (window as any).__castle.state);expect(state.z).toBeLessThan(7.7786);expect(state.yaw).not.toBe(0);
  }else{
   await page.keyboard.down('KeyW');
-  try { await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.z),{timeout:20000}).toBeLessThan(31); }
+  try { await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.z),{timeout:20000}).toBeLessThan(7.7786); }
   finally { await page.keyboard.up('KeyW'); }
  }
  // Rendering evidence is intentionally independent of the long route simulation.
  // VITE_TEST-only mutation puts the production camera/player on the top floor without claiming a physical route measurement.
- await page.evaluate(()=>{const a=(window as any).__walkTest;a.set(0,10.8,3.4);a.look(0,0);});
+ await page.evaluate(()=>{const a=(window as any).__walkTest;const w=a.toWorld(0,-2);a.set(w.x,21.8,w.z);a.look(0,0);});
  await page.waitForTimeout(500);
  // Chromium SwiftShader can block indefinitely on any explicit GPU framebuffer readback.
  // Use Three's renderer call count to prove the production render loop is drawing there; WebKit projects persist human-reviewable interior PNG evidence.
  await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.meshes),{timeout:10000}).toBeGreaterThan(0);
  if(!info.project.name.includes('chromium'))await page.screenshot({path:'test-results/'+info.project.name+'-interior.png'});
- expect(await page.evaluate(()=> (window as any).__castle.state.y)).toBeCloseTo(10.8);
+ expect(await page.evaluate(()=> (window as any).__castle.state.y)).toBeCloseTo(21.8);
  expect(errors).toEqual([]);expect(bad).toEqual([]);
  const loadedKeep=await page.evaluate(()=>performance.getEntriesByType('resource').some((e:any)=>e.name.includes('/models/matsuyama_keep.glb')));
  expect(loadedKeep).toBe(true);
+ expect(await page.evaluate(()=>performance.getEntriesByType('resource').filter((e:any)=>e.name.includes('/models/')).map((e:any)=>e.name.split('/').pop()))).toEqual(['matsuyama_keep.glb']);
+ await expect(page.locator('#map-credit')).toContainText('国土地理院');
  const manifest=await page.request.get('data/source_manifest.json');expect(manifest.status()).toBe(200);
  const sources=await manifest.json();expect(sources.some((s:any)=>s.id==='WM-PD-TOP'&&s.status==='admitted')).toBe(true);
  expect(sources.some((s:any)=>/BY-SA/.test(s.license)&&s.status!=='excluded')).toBe(false);
@@ -85,7 +87,7 @@ test('continuous production Walker route and third-floor wall constraint',async(
  await page.goto('./');await page.waitForFunction(()=> (window as any).__castle?.ready);
  const result=await page.evaluate(()=>{
   const api=(window as any).__walkTest;api.start();api.reset();
-  const route=[[0,23],[0,17],[0,5],[-3,5],[-3,3.3],[-3,-3.3],[3,-3.3],[3,3.3],[-3,3.3],[-3,-3.3],[0,-3.3],[0,3.4]];
+  const route=[[0,8],[-2.8,8],[-2.8,4.5],[-2.8,-4.8],[2.8,-4.8],[2.8,-4.5],[2.8,4.8],[-2.8,4.8],[-2.8,4.5],[-2.8,-4.8],[0,-4.8],[0,-2]].map(([x,z])=>{const p=api.toWorld(x,z);return [p.x,p.z];});
   for(const [x,z] of route){
    let arrived=false;
    for(let i=0;i<2400;i++){
@@ -100,7 +102,7 @@ test('continuous production Walker route and third-floor wall constraint',async(
   const final=(window as any).__castle.state;
   return {topY,x:final.x,z:final.z};
  });
- expect(result.topY).toBeCloseTo(10.8);
- expect(result.x).toBeLessThan(5.4);
+ expect(result.topY).toBeCloseTo(21.8);
+ expect(result.x).toBeLessThan(7.4);
  expect(errors).toEqual([]);expect(bad).toEqual([]);
 });
