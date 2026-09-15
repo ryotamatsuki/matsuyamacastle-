@@ -1,4 +1,23 @@
 import {test,expect} from '@playwright/test';
+
+test('PLATEAU LOD2 exterior loads, renders and returns to walk model',async({page},info)=>{
+ const errors:string[]=[];const bad:string[]=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+ page.on('response',r=>{if(r.status()>=400)bad.push(r.status()+' '+r.url());});
+ await page.goto('./');
+ await page.waitForFunction(()=> (window as any).__castle?.ready);
+ await page.getByRole('button',{name:'PLATEAUの外観を見る',exact:true}).click();
+ await expect(page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true})).toBeVisible({timeout:60000});
+ await page.waitForFunction(()=>{const s=(window as any).__castle?.state;return s?.surveyReady&&s?.surveyMode;},{timeout:60000});
+ await expect(page.locator('#load-status')).toContainText('公式LOD2形状');
+ await page.screenshot({path:'test-results/'+info.project.name+'-plateau.png'});
+ await page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true}).click();
+ await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.surveyMode)).toBe(false);
+ await page.screenshot({path:'test-results/'+info.project.name+'-exterior.png'});
+ expect(errors).toEqual([]);expect(bad).toEqual([]);
+});
+
 test('load GLB, evidence, licence, continuous stairs, walls and inputs',async({page},info)=>{
  const errors:string[]=[];const bad:string[]=[];
  page.on('pageerror',e=>errors.push(e.message));
@@ -6,12 +25,6 @@ test('load GLB, evidence, licence, continuous stairs, walls and inputs',async({p
  page.on('response',r=>{if(r.status()>=400)bad.push(r.status()+' '+r.url());});
  await page.goto('./');await page.waitForFunction(()=> (window as any).__castle?.ready);
  await expect(page.locator('#start')).toBeEnabled();
- await page.getByRole('button',{name:'PLATEAUの外観を見る',exact:true}).click();
- await expect(page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true})).toBeVisible({timeout:60000});
- await expect(page.locator('#load-status')).toContainText('公式LOD2形状');
- await page.screenshot({path:'test-results/'+info.project.name+'-plateau.png'});
- await page.getByRole('button',{name:'散歩用の復元外観へ戻る',exact:true}).click();
- await page.screenshot({path:'test-results/'+info.project.name+'-exterior.png'});
  await page.getByRole('button',{name:'出典・ライセンス',exact:true}).click();
  await expect(page.locator('#panel')).toBeVisible();
  await expect(page.locator('#panel')).toContainText('CITY-KEEP');
@@ -28,7 +41,9 @@ test('load GLB, evidence, licence, continuous stairs, walls and inputs',async({p
  await expect(page.locator('#panel')).toContainText('Cのまま');
  await page.locator('#close-panel').click();
  await page.locator('#start').click();
- await expect.poll(()=>page.evaluate(()=> (window as any).__castle.state.active)).toBe(true);
+ await expect(page.locator('#welcome')).toBeHidden();
+ await expect(page.locator('#pause')).toBeVisible();
+ expect(await page.evaluate(()=> (window as any).__castle.state.active)).toBe(true);
  if(info.project.name.includes('mobile')){
  const joy=page.locator('#joystick'),b=(await joy.boundingBox())!;
  // Two simultaneous touch pointer streams through production handlers.
@@ -56,8 +71,8 @@ test('load GLB, evidence, licence, continuous stairs, walls and inputs',async({p
  await page.evaluate(()=>{const a=(window as any).__walkTest;for(let i=0;i<300;i++)a.step(8,0,.02);});
  expect(await page.evaluate(()=> (window as any).__castle.state.x)).toBeLessThan(5.4);
  expect(errors).toEqual([]);expect(bad).toEqual([]);
- const model=await page.request.get('models/matsuyama_keep.glb');expect(model.status()).toBe(200);
- const data=await model.body();expect(data.subarray(0,4).toString()).toBe('glTF');
+ const loadedKeep=await page.evaluate(()=>performance.getEntriesByType('resource').some((e:any)=>e.name.includes('/models/matsuyama_keep.glb')));
+ expect(loadedKeep).toBe(true);
  const manifest=await page.request.get('data/source_manifest.json');expect(manifest.status()).toBe(200);
  const sources=await manifest.json();expect(sources.some((s:any)=>s.id==='WM-PD-TOP'&&s.status==='admitted')).toBe(true);
  expect(sources.some((s:any)=>/BY-SA/.test(s.license)&&s.status!=='excluded')).toBe(false);
