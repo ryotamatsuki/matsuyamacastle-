@@ -23,9 +23,11 @@ test('twelve lightweight tourist NPCs animate three per interior floor',async({p
  if(!info.project.name.includes('chromium')){
   const floors=[['hole',9.2],['floor1',13.2],['floor2',17.6],['floor3',21.8]] as const;
   await page.evaluate(()=> (window as any).__walkTest.start());
+  // Evidence camera sits near the south side of each floor and looks north across the room,
+  // so all three presentation NPC zones can be reviewed for scale, floor contact and clipping.
   for(const [name,y] of floors){
-   await page.evaluate((yy:number)=>{const a=(window as any).__walkTest,w=a.toWorld(0,0);a.set(w.x,yy,w.z);a.look(0,0);},y);
-   await page.waitForTimeout(350);
+   await page.evaluate((yy:number)=>{const a=(window as any).__walkTest,w=a.toWorld(0,7);a.set(w.x,yy,w.z);a.look(.015,-.03);},y);
+   await page.waitForTimeout(450);
    await page.screenshot({path:`test-results/${info.project.name}-${name}-npcs.png`});
   }
  }
