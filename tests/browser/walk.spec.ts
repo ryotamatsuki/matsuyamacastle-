@@ -26,9 +26,9 @@ test('single PLATEAU model remains loaded between orbit and walking',async({page
 test('walk starts and resets at the Honmaru plaza cinematic viewpoint',async({page},info)=>{
  const {errors,bad}=watchPage(page);
  await page.goto('./');await page.waitForFunction(()=> (window as any).__castle?.ready);
- const initial=await page.evaluate(()=>{const a=(window as any).__walkTest,s=(window as any).__castle.state,w=a.toWorld(-5.05,55);return {s,w};});
+ const initial=await page.evaluate(()=>{const a=(window as any).__walkTest,s=(window as any).__castle.state,w=a.toWorld(-2,60);return {s,w};});
  expect(initial.s.x).toBeCloseTo(initial.w.x,5);expect(initial.s.z).toBeCloseTo(initial.w.z,5);expect(initial.s.y).toBeCloseTo(.05,5);
- expect(initial.s.yaw).toBeCloseTo(-.105,5);expect(initial.s.pitch).toBeCloseTo(.22,5);
+ expect(initial.s.yaw).toBeCloseTo(-.04,5);expect(initial.s.pitch).toBeCloseTo(.17,5);
  await page.locator('#start').click();await expect(page.locator('#welcome')).toBeHidden();await page.waitForTimeout(500);
  await expect(page.locator('#location')).toHaveText('本丸広場');
  await expect(page.locator('#route')).toContainText('本壇');
@@ -48,9 +48,9 @@ test('walk starts and resets at the Honmaru plaza cinematic viewpoint',async({pa
  const moved=await page.evaluate(()=> (window as any).__castle.state);expect(Math.hypot(moved.x-before.x,moved.z-before.z)).toBeGreaterThan(.05);
  await page.getByRole('button',{name:'設定',exact:true}).click();
  await page.getByRole('button',{name:'本丸広場へ戻る',exact:true}).click();
- const reset=await page.evaluate(()=>{const a=(window as any).__walkTest,s=(window as any).__castle.state,w=a.toWorld(-5.05,55);return {s,w};});
+ const reset=await page.evaluate(()=>{const a=(window as any).__walkTest,s=(window as any).__castle.state,w=a.toWorld(-2,60);return {s,w};});
  expect(reset.s.x).toBeCloseTo(reset.w.x,5);expect(reset.s.z).toBeCloseTo(reset.w.z,5);expect(reset.s.y).toBeCloseTo(.05,5);
- expect(reset.s.yaw).toBeCloseTo(-.105,5);expect(reset.s.pitch).toBeCloseTo(.22,5);
+ expect(reset.s.yaw).toBeCloseTo(-.04,5);expect(reset.s.pitch).toBeCloseTo(.17,5);
  expect(errors).toEqual([]);expect(bad).toEqual([]);
 });
 
