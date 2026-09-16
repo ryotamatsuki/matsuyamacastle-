@@ -24,5 +24,5 @@ export const NPC_MIN_SEPARATION=.72;
 export const PLAYER_AVOID_DISTANCE=1.2;
 
 export function pointInZone(zone,x,z,margin=0){return x>=zone.x0+margin&&x<=zone.x1-margin&&z>=zone.z0+margin&&z<=zone.z1-margin;}
-export function onAnyStair(x,z,margin=NPC_RADIUS,floor=null){return stairs.some((s,i)=>(floor===null||i===floor||i===floor-1)&&Math.abs(x-s.x)<=s.width/2+margin&&z>=Math.min(s.z0,s.z1)-margin&&z<=Math.max(s.z0,s.z1)+margin);}
+export function onAnyStair(x,z,margin=NPC_RADIUS,floor=-1){return stairs.some((s,i)=>(floor<0||i===floor||i===floor-1)&&Math.abs(x-s.x)<=s.width/2+margin&&z>=Math.min(s.z0,s.z1)-margin&&z<=Math.max(s.z0,s.z1)+margin);}
 export function zonesForFloor(floor){return npcZones.filter(z=>z.floor===floor);}
