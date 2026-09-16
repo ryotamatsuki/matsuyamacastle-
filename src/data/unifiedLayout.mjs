@@ -21,5 +21,11 @@ for(let i=1;i<4;i++){
   for(const x of [-3,0,3])openings.push({id:`window-${i}-NS-${sign}-${x}`,x0:x-.66,x1:x+.66,z0:sign*f.depth/2-.75,z1:sign*f.depth/2+.75,y0,y1,type:'window',evidence:['CITY-KEEP','CITY-PHOTO-KEEP','WM-PD-TOP'],accuracy:'B morphology / C coordinates'});
  }
 }
-export const start={...toWorld(0,13.1),y:9.2};
-export const assumptions={floorElevations:levels.map(f=>f.y),floorHeights:levels.map(f=>f.top-f.y),wallThicknesses:levels.map(f=>f.thickness),courtyardElevation:9.2,datum:'PLATEAU origin elevation 131.72277507 m; local y, not sea-level elevation',basis:'Roof/wall tier envelopes constrain the fitted interior. Heights, courtyard level, thickness, partitions, stair positions and exact window bays are C estimates; no surveyed interior supplied.',entrance:'Courtyard-facing entrance confirmed by CITY-KEEP; exact position and size interpolated. Not a certified current visitor route.'};
+// Opening viewpoint: stay in the same Honmaru-plaza area as the user's reference view,
+// but shift a few metres east/right and back so the inferred approach sits to the left
+// while the linked keep reads clearly in the centre. This is presentation framing, not
+// an assertion of an official historic viewpoint.
+export const start={...toWorld(-2.0,60.0),y:.05};
+// Aim toward the keep's mid-height. Exact framing is C presentation geometry.
+export const initialView={yaw:-.04,pitch:.17,accuracy:'C presentation framing'};
+export const assumptions={floorElevations:levels.map(f=>f.y),floorHeights:levels.map(f=>f.top-f.y),wallThicknesses:levels.map(f=>f.thickness),courtyardElevation:9.2,datum:'PLATEAU origin elevation 131.72277507 m; local y, not sea-level elevation',basis:'Roof/wall tier envelopes constrain the fitted interior. Heights, courtyard level, thickness, partitions, stair positions and exact window bays are C estimates; no surveyed interior supplied.',entrance:'Courtyard-facing entrance confirmed by CITY-KEEP; exact position and size interpolated. Not a certified current visitor route.',spawn:'Honmaru plaza local (-2.0,60.0), y=0.05. Chosen to match the user reference composition: approach left, linked keep centred; presentation coordinate is C.'};
