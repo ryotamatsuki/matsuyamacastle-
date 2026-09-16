@@ -1,8 +1,8 @@
 {
   "file": "public/models/matsuyama_keep.glb",
-  "source_revision": "f57fb960cc7839e815fac08f4429c81262bb9133",
-  "sha256": "d07c50a04f0ebf04a46272b6df903aa10914c0429aa658461ead3842118bcf6c",
-  "bytes": 19141776,
+  "source_revision": "8cbd1a776bcafd83ed1d48e89a271f9d3e6a203f",
+  "sha256": "33330b4f76b9f5da6303f3a2ab1a0ab2c1b3906b3c0ceb4eb2c55362e3036cb6",
+  "bytes": 19142108,
   "mesh_count": 59,
   "triangles": 273049,
   "image_count": 12,
