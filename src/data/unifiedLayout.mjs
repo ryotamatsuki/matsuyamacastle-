@@ -21,5 +21,11 @@ for(let i=1;i<4;i++){
   for(const x of [-3,0,3])openings.push({id:`window-${i}-NS-${sign}-${x}`,x0:x-.66,x1:x+.66,z0:sign*f.depth/2-.75,z1:sign*f.depth/2+.75,y0,y1,type:'window',evidence:['CITY-KEEP','CITY-PHOTO-KEEP','WM-PD-TOP'],accuracy:'B morphology / C coordinates'});
  }
 }
-export const start={...toWorld(0,13.1),y:9.2};
-export const assumptions={floorElevations:levels.map(f=>f.y),floorHeights:levels.map(f=>f.top-f.y),wallThicknesses:levels.map(f=>f.thickness),courtyardElevation:9.2,datum:'PLATEAU origin elevation 131.72277507 m; local y, not sea-level elevation',basis:'Roof/wall tier envelopes constrain the fitted interior. Heights, courtyard level, thickness, partitions, stair positions and exact window bays are C estimates; no surveyed interior supplied.',entrance:'Courtyard-facing entrance confirmed by CITY-KEEP; exact position and size interpolated. Not a certified current visitor route.'};
+// Opening viewpoint: the walk begins from the Honmaru plaza at the already-tested
+// end of the continuous courtyard↔plaza route. This is a presentation choice, not a
+// claim that this exact point is an official historical viewpoint.
+export const start={...toWorld(-5.05,55.0),y:.05};
+// Aim slightly right-to-left toward the keep complex and slightly upward so the first
+// walking frame presents the linked keep as a destination rather than the ground plane.
+export const initialView={yaw:-.105,pitch:.22,accuracy:'C presentation framing'};
+export const assumptions={floorElevations:levels.map(f=>f.y),floorHeights:levels.map(f=>f.top-f.y),wallThicknesses:levels.map(f=>f.thickness),courtyardElevation:9.2,datum:'PLATEAU origin elevation 131.72277507 m; local y, not sea-level elevation',basis:'Roof/wall tier envelopes constrain the fitted interior. Heights, courtyard level, thickness, partitions, stair positions and exact window bays are C estimates; no surveyed interior supplied.',entrance:'Courtyard-facing entrance confirmed by CITY-KEEP; exact position and size interpolated. Not a certified current visitor route.',spawn:'Honmaru plaza local (-5.05,55.0), y=0.05. Chosen for an inviting overview and continuity with the tested route; presentation coordinate is C.'};
