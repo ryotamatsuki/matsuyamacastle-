@@ -14,13 +14,13 @@ function stateDuration(a:Agent,state:NpcState){if(state==='idle')return randRang
 
 export class NpcSystem{
  readonly agents:Agent[]=[];private accumulator=0;private elapsed=0;
- constructor(private scene:T.Scene,seed=20260916){
+ constructor(private parent:T.Object3D,seed=20260916){
   npcZones.forEach((zone:any,index:number)=>{
    const rng=mulberry32(seed+index*7919),style=styleFor(index),root=createNpcCharacter(style);
    const inset=.5,x=zone.x0+inset+(zone.x1-zone.x0-2*inset)*(.25+.5*rng()),z=zone.z0+inset+(zone.z1-zone.z0-2*inset)*(.25+.5*rng());
    const a:Agent={id:`tourist-${String(index+1).padStart(2,'0')}`,floor:zone.floor,zone,root,rng,state:index%3===0?'walk':index%3===1?'idle':'look',stateTime:0,stateDuration:0,x,z,prevX:x,prevZ:z,targetX:x,targetZ:z,yaw:rng()*Math.PI*2,targetYaw:0,speed:randRange(rng,.55,.9),phase:rng()*Math.PI*2,style};
    const target=chooseTarget(zone,rng,this.agents,a.id);a.targetX=target.x;a.targetZ=target.z;a.targetYaw=Math.atan2(target.x-x,target.z-z);a.stateDuration=stateDuration(a,a.state);
-   root.userData={...root.userData,npcId:a.id,floor:a.floor,state:a.state,styleId:style.id};scene.add(root);this.agents.push(a);
+   root.userData={...root.userData,npcId:a.id,floor:a.floor,state:a.state,styleId:style.id};this.parent.add(root);this.agents.push(a);
   });
   this.render(0);
  }
@@ -64,5 +64,5 @@ export class NpcSystem{
  }
  update(dt:number,player:{x:number;y:number;z:number}){this.elapsed+=dt;this.accumulator+=dt;while(this.accumulator>=AI_STEP){this.tick(AI_STEP,player);this.accumulator-=AI_STEP;}this.render(this.accumulator/AI_STEP);}
  snapshot(){return this.agents.map(a=>({id:a.id,floor:a.floor,state:a.state,x:a.x,z:a.z,y:a.zone.y,zone:a.zone.id,style:a.style.id,height:a.style.height,hat:a.style.hat,bag:a.style.bag}));}
- dispose(){for(const a of this.agents)this.scene.remove(a.root);}
+ dispose(){for(const a of this.agents)this.parent.remove(a.root);}
 }
