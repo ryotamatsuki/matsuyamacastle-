@@ -32,7 +32,9 @@ test('walk starts and resets at the Honmaru plaza cinematic viewpoint',async({pa
  await page.locator('#start').click();await expect(page.locator('#welcome')).toBeHidden();await page.waitForTimeout(500);
  await expect(page.locator('#location')).toHaveText('本丸広場');
  await expect(page.locator('#route')).toContainText('本壇');
- await page.screenshot({path:'test-results/'+info.project.name+'-plaza-spawn.png'});
+ // Chromium/SwiftShader can hang on framebuffer capture while the active 3D loop is running.
+ // WebKit and mobile WebKit retain the human-reviewable spawn framing screenshots.
+ if(!info.project.name.includes('chromium'))await page.screenshot({path:'test-results/'+info.project.name+'-plaza-spawn.png'});
  // Move away, then use the user-facing reset and prove both position and framing return.
  const before=await page.evaluate(()=> (window as any).__castle.state);
  if(info.project.name.includes('mobile')){
