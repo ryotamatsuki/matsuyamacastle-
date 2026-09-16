@@ -21,14 +21,19 @@ test('twelve lightweight tourist NPCs animate three per interior floor',async({p
  expect(errors).toEqual([]);expect(bad).toEqual([]);
 
  if(!info.project.name.includes('chromium')){
-  const floors=[['hole',9.2],['floor1',13.2],['floor2',17.6],['floor3',21.8]] as const;
+  const names=['hole','floor1','floor2','floor3'] as const;
   await page.evaluate(()=> (window as any).__walkTest.start());
-  // Evidence camera sits near the south side of each floor and looks north across the room,
-  // so all three presentation NPC zones can be reviewed for scale, floor contact and clipping.
-  for(const [name,y] of floors){
-   await page.evaluate((yy:number)=>{const a=(window as any).__walkTest,w=a.toWorld(0,7);a.set(w.x,yy,w.z);a.look(.015,-.03);},y);
+  // Visual evidence follows the middle NPC on each floor from a nearby, safe interior point.
+  // This avoids columns/walls obscuring the frame and makes scale, floor contact and clothing reviewable.
+  for(let floor=0;floor<4;floor++){
+   await page.evaluate((f:number)=>{
+    const api=(window as any).__walkTest,npcs=(window as any).__npcs.snapshot().filter((n:any)=>n.floor===f),target=npcs[1];
+    const camX=target.x+(f===1||f===2?1.0:.65),camZ=target.z+1.8,w=api.toWorld(camX,camZ);
+    const dx=target.x-camX,dz=target.z-camZ,yaw=Math.atan2(-dx,-dz);
+    api.set(w.x,target.y,w.z);api.look(yaw,.04);
+   },floor);
    await page.waitForTimeout(450);
-   await page.screenshot({path:`test-results/${info.project.name}-${name}-npcs.png`});
+   await page.screenshot({path:`test-results/${info.project.name}-${names[floor]}-npcs.png`});
   }
  }
 });
