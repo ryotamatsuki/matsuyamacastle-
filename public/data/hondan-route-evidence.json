@@ -1,7 +1,7 @@
 {
-  "version": "2026-09-16-hondan-route-v1",
-  "purpose": "Evidence ledger for the walkable connection from the existing linked-keep courtyard to the Honmaru main plaza.",
-  "coordinate_policy": "PLATEAU and GSI aerial horizontal registration is unchanged. Gate centres, path widths, stair tread/riser dimensions and the vertical closure from the existing y=9.2 courtyard datum are C estimates unless explicitly stated otherwise.",
+  "version": "2026-09-16-hondan-route-v3",
+  "purpose": "Evidence ledger for the walkable connection from the existing linked-keep courtyard to the Honmaru main plaza without presenting unsupported monumental stairs or retaining walls as historical structure.",
+  "coordinate_policy": "PLATEAU and GSI aerial horizontal registration is unchanged. Gate centres, path widths, lower approach grade, low sidewalls and exact stair tread/riser dimensions are C estimates unless explicitly stated otherwise. Only the official nine-step count near 二ノ門 is represented as a counted stair run.",
   "sources": [
     {
       "id": "CITY-SUJIGANE",
@@ -37,7 +37,7 @@
       "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/rekishibunka/bunkazai/kuni/matsuyamajou_2nomon.html",
       "accessed": "2026-09-16",
       "use": "facts only",
-      "facts": ["本壇進入路の門関係", "二ノ門付近の9段の石段という公式記述を歩行ルートの段数に反映"]
+      "facts": ["一ノ門と二ノ門の間は枡形を構成", "一ノ門内で左折し九段の石段を上ると二ノ門に至る"]
     },
     {
       "id": "CITY-1MON",
@@ -46,7 +46,7 @@
       "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/rekishibunka/bunkazai/kuni/matsuyamajou_1nomon.html",
       "accessed": "2026-09-16",
       "use": "facts only",
-      "facts": ["本壇最初の門", "本壇の出入口系統を構成"]
+      "facts": ["本壇最初の門", "本壇入口に西面して建つ", "一ノ門と二ノ門の間は枡形を構成"]
     },
     {
       "id": "CASTLE-OFFICIAL-HONDAN",
@@ -61,12 +61,27 @@
   "implementation": {
     "PLATEAU_GSI_horizontal_transform_changed": false,
     "respawn_changed": false,
-    "gate_cut": "south-west end of the current inner-courtyard southern PLATEAU wall; best-fit to documented 筋鉄門 / 筋鉄門東塀 relationship",
-    "gate_cut_accuracy": "B relationship / C coordinates",
+    "courtyard_gate_cut": "south-west end of the current inner-courtyard southern PLATEAU wall; best-fit to documented 筋鉄門 / 筋鉄門東塀 relationship",
+    "courtyard_gate_cut_accuracy": "B relationship / C coordinates",
     "documented_stone_steps": 9,
     "documented_step_geometry_accuracy": "count from official description; tread/riser geometry C",
-    "lower_descent": "C continuity interpolation to meet the existing georeferenced aerial plane",
+    "lower_exposed_inferred_step_count": 0,
+    "lower_approach": "one continuous C-grade approach, offset west of the frontal axis, rising from the Honmaru aerial-photo datum to an inferred west-facing 一ノ門 landing",
+    "lower_approach_accuracy": "C plan, slope and width; no claim that the rendered grade reproduces the historical paving profile",
+    "sidewalls": "six short low bands, each approximately 0.55 m thick, 0.55 m below and 1.15 m above the inferred grade; C visual/collision guidance only, not reconstructed rampart faces",
+    "sidewall_policy": "sidewalls follow the grade itself and must not be filled down to the Honmaru datum, preventing a large triangular invented wall from appearing in the plaza view",
+    "one_mon_relationship": "approach enters from the west, then turns north/left toward the official nine-step run; relationship follows city descriptions, coordinates are C",
     "main_plaza_horizontal_registration": "same local PLATEAU/GSI frame",
     "main_plaza_vertical_walk_surface_m": 0.05
-  }
+  },
+  "rejected_representations": [
+    {
+      "description": "39 individually rendered lower steps from the Honmaru plaza to the upper landing",
+      "reason": "They were only a continuity interpolation and visually implied an unsupported exposed monumental staircase in front of the keep."
+    },
+    {
+      "description": "two retaining wedges filled from the sloping approach all the way down to the plaza datum",
+      "reason": "They appeared as monumental triangular wall slabs not supported by PLATEAU or official dimensional evidence."
+    }
+  ]
 }
