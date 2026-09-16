@@ -3,7 +3,9 @@ import {embedMaterials} from './embed-materials.mjs';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {buildPlateau} from '../src/plateau.mjs';
 import {buildInterior} from '../src/unifiedInterior.mjs';
+import {buildApproach} from '../src/approach.mjs';
 import {assumptions} from '../src/data/unifiedLayout.mjs';
+import {routeEvidence} from '../src/data/hondanRoute.mjs';
 import {evidenceSummary} from '../src/data/interiorEvidence.mjs';
 
 // GLTFExporter uses FileReader for Blob buffers; Node provides Blob but not FileReader.
@@ -13,7 +15,7 @@ globalThis.FileReader=class{
 };
 
 const data=JSON.parse(await fs.readFile('public/data/plateau-castle-lod2.json'));
-const model=buildPlateau(data,{unified:true});model.name='MatsuyamaCastle_Unified';model.add(buildInterior());model.userData.assumptions=assumptions;
+const model=buildPlateau(data,{unified:true});model.name='MatsuyamaCastle_Unified';model.add(buildInterior(),buildApproach());model.userData.assumptions=assumptions;
 const meshEvidence=[
  {match:/^ExposedBeams_/,accuracy:'B-morphology / geometry-C',evidenceId:'exposed-timber-morphology',sourceIds:['CITY-KEEP','WM-PD-INSIDE','WM-CCBY-ARMOUR-4']},
  {match:/^(NurigomeLattice|RaisedShutters|SlidingEarthenDoors)_/,accuracy:'B-morphology / placement-C',evidenceId:'window-assembly-morphology',sourceIds:['CITY-KEEP','DPLA-CCBY-WINDOW-1963','WM-PD-TOP']},
@@ -33,9 +35,10 @@ model.userData={
  overallAccuracy:evidenceSummary.overallAccuracy,
  bGradeScope:evidenceSummary.bGradeScope,
  bGradeMeaning:'corroborated morphology/relationship only; not survey-grade coordinates',
- sourceIds:['PLATEAU-2020',...evidenceSummary.sourceIds,'CITY-PHOTO-KEEP','CITY-PHOTO-OVERVIEW','CITY-PHOTO-STONE','ORIGINAL'],
+ sourceIds:['PLATEAU-2020',...evidenceSummary.sourceIds,...routeEvidence.sourceIds,'CITY-PHOTO-KEEP','CITY-PHOTO-OVERVIEW','CITY-PHOTO-STONE','ORIGINAL'],
  materialManifest:'public/data/material-manifest.json',
  evidenceLedger:'docs/INTERIOR_EVIDENCE_MATRIX.md',
+ routeEvidence:'public/data/hondan-route-evidence.json',
  sourceManifest:'public/data/source_manifest.json',
  physicalIOSValidation:evidenceSummary.physicalIOSValidation
 };

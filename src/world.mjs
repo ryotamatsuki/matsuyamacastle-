@@ -1,6 +1,7 @@
 import * as T from 'three';
 import data from '../public/data/plateau-castle-lod2.json' with {type:'json'};
 import {levels,stairs,start,toLocal,toWorld} from './data/unifiedLayout.mjs';
+import {approachSurfaces} from './data/hondanRoute.mjs';
 import {surfaceTriangles} from './envelope.mjs';
 import {floorPieces,interiorParts} from './unifiedInterior.mjs';
 export {floorPieces};
@@ -13,8 +14,12 @@ function inside(x,z,ring){let c=false;for(let i=0,j=ring.length-1;i<ring.length;
 export function groundAt(x,z,maxY){
  const l=toLocal(x,z);let best=-Infinity;
  if(maxY>=9.2&&courtyards.some(r=>inside(x,z,r)))best=9.2;
- // Threshold bridges only wall thickness at the actual opening, no front staircase.
+ // Threshold bridges only wall thickness at the actual keep opening, no front staircase.
  if(Math.abs(l.x)<=1.3&&l.z>=9.3&&l.z<=11.4&&maxY>=9.2)best=9.2;
+ // Evidence-bounded but coordinate-inferred Hon-dan route. The same surfaces are rendered
+ // into the GLB by approach.mjs, so collision and visible steps cannot drift apart.
+ // Epsilon prevents binary floating-point error from rejecting an exactly 0.20m return step.
+ for(const a of approachSurfaces)if(l.x>=a.x0&&l.x<=a.x1&&l.z>=a.z0&&l.z<=a.z1&&a.y<=maxY+1e-7)best=Math.max(best,a.y);
  for(const f of floors)if(l.x>=f.x0&&l.x<=f.x1&&l.z>=f.z0&&l.z<=f.z1&&f.y<=maxY)best=Math.max(best,f.y);
  for(const s of ramps){const t=(l.z-s.z0)/(s.z1-s.z0);if(Math.abs(l.x-s.x)<=s.width/2&&t>=0&&t<=1){const y=s.y0+(s.y1-s.y0)*t;if(y<=maxY)best=Math.max(best,y);}}
  return best;

@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {openings,toLocal,toWorld} from './data/unifiedLayout.mjs';
+import {gateOpenings} from './data/hondanRoute.mjs';
 // Convex triangle minus a box: each rejected half-space is retained, only the
 // intersection is removed. This handles cuts crossing original polygon edges.
 export function subtractBox(poly,box){
@@ -25,7 +26,7 @@ export function surfaceTriangles(s,cut=true){
  const u=new T.Vector3(normal.z,0,-normal.x);if(u.length()<.001)u.set(1,0,0);u.normalize();const v=normal.clone().cross(u);
  const flat=rings.map(r=>r.map(p=>new T.Vector2(p.clone().sub(o).dot(u),p.clone().sub(o).dot(v)))),all=rings.flat();
  let polygons=T.ShapeUtils.triangulateShape(flat[0],flat.slice(1)).map(f=>f.map(i=>{const p=all[i],l=toLocal(p.x,p.z);return [l.x,p.y,l.z];}));
- if(cut&&s.kind==='WallSurface')for(const box of openings){
+ if(cut&&s.kind==='WallSurface')for(const box of [...openings,...gateOpenings]){
   polygons=polygons.flatMap(p=>{
    if(p.every(v=>v[0]<box.x0)||p.every(v=>v[0]>box.x1)||p.every(v=>v[1]<box.y0)||p.every(v=>v[1]>box.y1)||p.every(v=>v[2]<box.z0)||p.every(v=>v[2]>box.z1))return [p];
    return subtractBox(p,box);
