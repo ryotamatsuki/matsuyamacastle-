@@ -46,7 +46,7 @@ export class NpcSystem{
     const dx=a.targetX-a.x,dz=a.targetZ-a.z,dist=Math.hypot(dx,dz);
     if(dist<.12){this.setState(a,'pause');continue;}
     const step=Math.min(a.speed*dt,dist),nx=a.x+dx/dist*step,nz=a.z+dz/dist*step;
-    if(!pointInZone(a.zone,nx,nz,.34)||onAnyStair(nx,nz,.34)){this.chooseAndTurn(a);continue;}
+    if(!pointInZone(a.zone,nx,nz,.34)||onAnyStair(nx,nz,.34,a.floor)){this.chooseAndTurn(a);continue;}
     a.x=nx;a.z=nz;a.yaw=Math.atan2(dx,dz);
    }else if(a.state==='pause'&&a.stateTime>=a.stateDuration){if(a.rng()<.45){a.targetYaw=a.yaw+randRange(a.rng,-.55,.55);this.setState(a,'look');}else this.setState(a,'idle');}
   }
