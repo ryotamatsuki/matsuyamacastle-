@@ -7,7 +7,7 @@ export function randomPointInZone(zone,rng,margin=NPC_RADIUS+.12){
 
 export function targetIsSafe(zone,target,agents,selfId){
  if(!pointInZone(zone,target.x,target.z,NPC_RADIUS+.08))return false;
- if(onAnyStair(target.x,target.z,NPC_RADIUS+.08))return false;
+ if(onAnyStair(target.x,target.z,NPC_RADIUS+.08,zone.floor))return false;
  for(const other of agents){
   if(other.id===selfId||other.floor!==zone.floor)continue;
   if(Math.hypot(target.x-other.x,target.z-other.z)<NPC_MIN_SEPARATION)return false;
