@@ -25,7 +25,7 @@ test('all NPC zones stay on valid fitted floors and clear of walls and stair vol
   ];
   for(const [x,z] of samples){
    assert.ok(pointInZone(zone,x,z,.34),`${zone.id} sample outside safe margin`);
-   assert.equal(onAnyStair(x,z,NPC_RADIUS+.08),false,`${zone.id} intersects stair`);
+   assert.equal(onAnyStair(x,z,NPC_RADIUS+.08,zone.floor),false,`${zone.id} intersects stair`);
    const w=toWorld(x,z);
    assert.equal(blocked(w.x,zone.y,w.z,NPC_RADIUS),false,`${zone.id} blocked at ${x},${z}`);
    assert.equal(groundAt(w.x,w.z,zone.y+.12),zone.y,`${zone.id} has no floor at ${x},${z}`);
@@ -46,7 +46,7 @@ test('deterministic roaming simulation remains finite, inside zones and non-over
    if(dist>.0001){const d=Math.min(a.speed*.05,dist);a.x+=dx/dist*d;a.z+=dz/dist*d;}
    assert.ok(Number.isFinite(a.x)&&Number.isFinite(a.z));
    assert.ok(pointInZone(a.zone,a.x,a.z,.33),`${a.id} left ${a.zone.id}`);
-   assert.equal(onAnyStair(a.x,a.z,.34),false,`${a.id} entered stair`);
+   assert.equal(onAnyStair(a.x,a.z,.34,a.floor),false,`${a.id} entered stair`);
   }
   for(let floor=0;floor<4;floor++){
    const same=agents.filter(a=>a.floor===floor);
