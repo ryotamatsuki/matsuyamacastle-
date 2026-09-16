@@ -2,10 +2,10 @@
 // Coordinates are metres in the SAME fitted local frame as unifiedLayout.mjs.
 // Horizontal registration follows PLATEAU + georeferenced GSI aerial imagery.
 // Gate relationships/directions follow Matsuyama City / official castle descriptions;
-// exact gate centres, retaining-work geometry and vertical closure remain C estimates.
+// exact gate centres, sidewall geometry and vertical closure remain C estimates.
 
 export const routeEvidence={
- version:'2026-09-16-hondan-route-v2',
+ version:'2026-09-16-hondan-route-v3',
  sourceIds:['CITY-SUJIGANE','CITY-3MON','CITY-2MON','CITY-1MON','CITY-SUJIGANE-EAST-WALL','CASTLE-OFFICIAL-HONDAN'],
  officialFacts:[
   '筋鉄門は天守と小天守の間の櫓門で、三ノ門とともに天守南側の枡形を構成する。',
@@ -15,8 +15,8 @@ export const routeEvidence={
   '本壇は本丸より約8m高く、出入口は一ノ門の1か所である。'
  ],
  coordinateAccuracy:'C — best-fit registration to PLATEAU envelope and GSI aerial; not survey-grade gate centres',
- verticalAccuracy:'C — courtyard y=9.2 and Honmaru datum near y=0 are retained. Only the official nine-step count is explicit; the lower rise is a continuous stone-lined grade, not an asserted historical stair count.',
- visualPolicy:'Do not render an invented monumental exposed stair from the Honmaru plaza. Keep the lower C-grade vertical closure narrow, west-offset and visually contained by inferred retaining stonework.'
+ verticalAccuracy:'C — courtyard y=9.2 and Honmaru datum near y=0 are retained. Only the official nine-step count is explicit; the lower rise is a continuous grade, not an asserted historical stair count.',
+ visualPolicy:'Do not render an invented monumental exposed stair or a new monumental retaining wall from the Honmaru plaza. Keep the lower C-grade closure narrow, west-offset and bounded only by low grade-following sidewalls.'
 };
 
 // Best-fit opening at the west end of the long south-courtyard wall. The ~3m clear
@@ -33,8 +33,6 @@ const platforms=[
  {name:'筋鉄門東塀沿い折れ',x0:-3.45,x1:4.85,z0:17.65,z1:19.55,y:9.2,accuracy:'C'},
  {name:'三ノ門側折れ',x0:2.65,x1:4.85,z0:18.75,z1:22.15,y:9.2,accuracy:'C'},
  {name:'二ノ門前枡形',x0:.25,x1:4.85,z0:21.55,z1:23.0,y:9.2,accuracy:'C'},
- // The lower landing is broadened westward so the path can enter a west-facing
- // 一ノ門 relationship and then turn north/left toward the documented nine steps.
  {name:'一ノ門内枡形_C',x0:-6.35,x1:2.95,z0:27.05,z1:30.05,y:7.85,accuracy:'B relationship / C footprint'},
  {name:'一ノ門敷・西面取付_C',x0:-6.35,x1:-3.55,z0:27.85,z1:29.55,y:7.85,accuracy:'B orientation / C coordinates'}
 ];
@@ -48,21 +46,29 @@ export const documentedNineSteps=steps('二ノ門九段',9,.25,2.95,23.0,.45,9.2
 // The former 39-step interpolation was visually misleading: no source supports an
 // exposed monumental stair from the plaza. Keep the same vertical closure, but move it
 // west of the frontal axis and represent it as one continuous, narrow C-grade approach.
-// On ascent this reaches a west-facing 一ノ門 relationship, then turns left/north to
-// the only explicitly counted nine-step run.
 export const approachRamps=[{
  name:'一ノ門外取付坂_C',x0:-6.35,x1:-3.75,z0:30.05,z1:44.6,y0:7.85,y1:.05,
  accuracy:'C — vertical/plan interpolation; no historical slope or stair-count claim',
  evidence:['CITY-1MON','CASTLE-OFFICIAL-HONDAN']
 }];
 
-// Retaining masses are deliberately C geometry. Their purpose is to reconcile the
-// official stone-walled/masugata route relationship with the LOD2 rampart mass without
-// inventing a free-standing staircase in front of the keep. They are NOT survey walls.
-export const approachRetainingWalls=[
- {name:'一ノ門外取付坂・西側石垣_C',x0:-8.15,x1:-6.35,z0:29.55,z1:44.6,baseY:-.05,top0:10.15,top1:.65,accuracy:'C visual/terrain interpolation'},
- {name:'一ノ門外取付坂・東側石垣_C',x0:-3.75,x1:-1.95,z0:30.05,z1:44.6,baseY:-.05,top0:10.15,top1:.65,accuracy:'C visual/terrain interpolation'}
-];
+function gradeY(r,z){const t=(z-r.z0)/(r.z1-r.z0);return r.y0+(r.y1-r.y0)*t;}
+const lower=approachRamps[0];
+// Low sidewalls follow the grade instead of filling the entire wedge down to the plaza
+// datum. This deliberately avoids inventing a monumental triangular rampart face. Each
+// wall is only ~0.55m thick, extends ~0.55m below the walk surface and ~1.15m above it.
+// Segment breaks reduce the impression of a single engineered slab. All dimensions are C.
+const wallBreaks=[30.05,34.4,38.8,44.6];
+function sidewall(side,i,x0,x1,z0,z1){
+ const y0=gradeY(lower,z0),y1=gradeY(lower,z1);
+ return {name:`一ノ門外取付坂・${side}低石垣_C-${i+1}`,x0,x1,z0,z1,bottom0:y0-.55,bottom1:y1-.55,top0:y0+1.15,top1:y1+1.15,accuracy:'C low grade-following sidewall; not survey geometry'};
+}
+export const approachRetainingWalls=wallBreaks.slice(0,-1).flatMap((z0,i)=>{
+ const z1=wallBreaks[i+1];return [
+  sidewall('西側',i,-6.9,-6.35,z0,z1),
+  sidewall('東側',i,-3.75,-3.2,z0,z1)
+ ];
+});
 
 export const mainPlaza={name:'本丸広場接続面',x0:-14,x1:18,z0:44.6,z1:78,y:.05,accuracy:'C vertical / georeferenced horizontal',render:false};
 export const approachSurfaces=[...platforms,...documentedNineSteps,mainPlaza];
@@ -70,9 +76,7 @@ export const approachSurfaces=[...platforms,...documentedNineSteps,mainPlaza];
 function rampPoint(r,z){
  const t=(z-r.z0)/(r.z1-r.z0);return [(r.x0+r.x1)/2,z,r.y0+(r.y1-r.y0)*t];
 }
-const lower=approachRamps[0];
-// Unit-test route. First two values are local x/z; optional third value is documentary
-// only. Movement still uses groundAt(), never a teleport or direct y assignment.
+// Unit-test route. Movement uses groundAt(), never a teleport or direct y assignment.
 export const routeWaypoints=[
  [-1.9,14.9],[-1.9,16.65],[-1.9,18.45],[3.7,18.45],[3.7,21.75],[1.6,22.55],
  ...documentedNineSteps.map(s=>[(s.x0+s.x1)/2,(s.z0+s.z1)/2]),
