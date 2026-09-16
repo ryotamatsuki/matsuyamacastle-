@@ -1,7 +1,7 @@
 {
-  "version": "2026-09-16-hondan-route-v2",
-  "purpose": "Evidence ledger for the walkable connection from the existing linked-keep courtyard to the Honmaru main plaza without presenting an unsupported exposed monumental staircase as historical structure.",
-  "coordinate_policy": "PLATEAU and GSI aerial horizontal registration is unchanged. Gate centres, path widths, retaining masses, lower approach grade and exact stair tread/riser dimensions are C estimates unless explicitly stated otherwise. Only the official nine-step count near 二ノ門 is represented as a counted stair run.",
+  "version": "2026-09-16-hondan-route-v3",
+  "purpose": "Evidence ledger for the walkable connection from the existing linked-keep courtyard to the Honmaru main plaza without presenting unsupported monumental stairs or retaining walls as historical structure.",
+  "coordinate_policy": "PLATEAU and GSI aerial horizontal registration is unchanged. Gate centres, path widths, lower approach grade, low sidewalls and exact stair tread/riser dimensions are C estimates unless explicitly stated otherwise. Only the official nine-step count near 二ノ門 is represented as a counted stair run.",
   "sources": [
     {
       "id": "CITY-SUJIGANE",
@@ -66,15 +66,22 @@
     "documented_stone_steps": 9,
     "documented_step_geometry_accuracy": "count from official description; tread/riser geometry C",
     "lower_exposed_inferred_step_count": 0,
-    "lower_approach": "one continuous C-grade stone-lined approach, offset west of the frontal axis, rising from the Honmaru aerial-photo datum to an inferred west-facing 一ノ門 landing",
-    "lower_approach_accuracy": "C plan, slope, width and retaining geometry; no claim that the rendered grade reproduces the historical paving profile",
-    "retaining_masses": "C visual reconciliation layer outside the PLATEAU source envelope; intended to contain the route within rampart-like stonework rather than show a free-standing monumental staircase",
+    "lower_approach": "one continuous C-grade approach, offset west of the frontal axis, rising from the Honmaru aerial-photo datum to an inferred west-facing 一ノ門 landing",
+    "lower_approach_accuracy": "C plan, slope and width; no claim that the rendered grade reproduces the historical paving profile",
+    "sidewalls": "six short low bands, each approximately 0.55 m thick, 0.55 m below and 1.15 m above the inferred grade; C visual/collision guidance only, not reconstructed rampart faces",
+    "sidewall_policy": "sidewalls follow the grade itself and must not be filled down to the Honmaru datum, preventing a large triangular invented wall from appearing in the plaza view",
     "one_mon_relationship": "approach enters from the west, then turns north/left toward the official nine-step run; relationship follows city descriptions, coordinates are C",
     "main_plaza_horizontal_registration": "same local PLATEAU/GSI frame",
     "main_plaza_vertical_walk_surface_m": 0.05
   },
-  "rejected_representation": {
-    "description": "39 individually rendered lower steps from the Honmaru plaza to the upper landing",
-    "reason": "They were only a continuity interpolation and visually implied an unsupported exposed monumental staircase in front of the keep. Version 2 removes that implication."
-  }
+  "rejected_representations": [
+    {
+      "description": "39 individually rendered lower steps from the Honmaru plaza to the upper landing",
+      "reason": "They were only a continuity interpolation and visually implied an unsupported exposed monumental staircase in front of the keep."
+    },
+    {
+      "description": "two retaining wedges filled from the sloping approach all the way down to the plaza datum",
+      "reason": "They appeared as monumental triangular wall slabs not supported by PLATEAU or official dimensional evidence."
+    }
+  ]
 }
