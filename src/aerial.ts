@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {NpcSystem} from './npc/npcSystem';
 export async function buildAerial(base:string,courtyards:number[][][]){
  const response=await fetch(base+'data/aerial-tiles.json');if(!response.ok)throw Error('航空写真 '+response.status);const data=await response.json();
  const root=new T.Group();root.name='GSI_GeoreferencedAerial';
@@ -20,5 +21,11 @@ export async function buildAerial(base:string,courtyards:number[][][]){
    const geometry=new T.BufferGeometry();geometry.setAttribute('position',new T.Float32BufferAttribute(vertices,3));geometry.setAttribute('uv',new T.Float32BufferAttribute(uv,2));geometry.computeVertexNormals();const court=new T.Mesh(geometry,material);court.receiveShadow=true;root.add(court);
   }
  }
- root.userData={sourceId:'GSI-AERIAL',groundHeightAccuracy:'C estimate; aerial imagery is not elevation data'};return root;
+ // Lightweight presentation-only tourist ambience. NPCs are procedural primitives, not source imagery.
+ const npcSystem=new NpcSystem(root,20260916);let npcLast=performance.now();
+ const npcFrame=(now:number)=>{const dt=Math.min((now-npcLast)/1000,.05);npcLast=now;const state=(window as any).__castle?.state??{x:1e6,y:-1e6,z:1e6};npcSystem.update(dt,state);requestAnimationFrame(npcFrame);};
+ requestAnimationFrame(npcFrame);
+ (window as any).__npcs={get count(){return npcSystem.agents.length;},snapshot:()=>npcSystem.snapshot(),presentation:'ambience'};
+ if(import.meta.env.VITE_TEST==='1')(window as any).__npcTest={snapshot:()=>npcSystem.snapshot()};
+ root.userData={sourceId:'GSI-AERIAL',groundHeightAccuracy:'C estimate; aerial imagery is not elevation data',npcPresentation:'12 procedural tourist characters; ambience only; no historic visitor claim'};return root;
 }
